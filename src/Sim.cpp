@@ -13,6 +13,7 @@ Sim::~Sim()
 
 void Sim::initialize()
 {
+	loadModel(_bodies, _joints);
 	// construct mass matrix and inv mass matrix
 
 	// gather up all points from bodies?

@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="src\Body.cpp" />
     <ClCompile Include="src\Force.cpp" />
+    <ClCompile Include="src\Joint.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Matrix.cpp" />
     <ClCompile Include="src\Sim.cpp" />
@@ -154,11 +155,13 @@
     <ClCompile Include="src\Vect2d.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="demo.h" />
+    <ClInclude Include="models\demo.h" />
     <ClInclude Include="src\Body.h" />
     <ClInclude Include="src\Force.h" />
+    <ClInclude Include="src\Joint.h" />
     <ClInclude Include="src\log.h" />
     <ClInclude Include="src\Matrix.h" />
+    <ClInclude Include="src\PMS.h" />
     <ClInclude Include="src\Sim.h" />
     <ClInclude Include="src\Solver.h" />
     <ClInclude Include="src\Structs.h" />

@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "Structs.h"
+
 #include "Body.h"
+#include "Joint.h"
+#include "Structs.h"
 
 class Sim
 {
@@ -22,4 +24,6 @@ private:
 	std::vector<Body> _bodies;
 	std::vector<Joint> _joints;
 	unsigned int _dof;
+
+	void loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 };

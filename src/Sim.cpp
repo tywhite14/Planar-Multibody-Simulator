@@ -1,3 +1,4 @@
+#include "log.h"
 #include "Sim.h"
 
 Sim::Sim() : _dof(0)
@@ -17,14 +18,13 @@ void Sim::initialize()
 	// gather up all points from bodies?
 
 	// gather all unit vectors?
-
-	// gather all forces?
-
-
 }
 
 void Sim::update()
 {
+	// gather all forces?
+
+	// solve EOM
 	
 }
 
@@ -38,12 +38,33 @@ void Sim::reset()
 	
 }
 
-int Sim::getDof()
+int Sim::getDof() const
 {
-	return 69;
+	return _dof;
 }
 
 void Sim::setDof()
 {
-	_dof = _bodies.size() * 3; // update later
+	_dof = _bodies.size() * 3;
+
+	for (auto& joint : _joints)
+	{
+		if (joint.type == jointType::rev)
+		{
+			_dof -= 2;
+		}
+		else if (joint.type == jointType::tran)
+		{
+			_dof -= 2;
+		}
+		else if (joint.type == jointType::rigid)
+		{
+			_dof -= 3;
+		}
+		else if (joint.type == jointType::rel_rot)
+		{
+			warn("This is incorrect. Update");
+			_dof -= 2;
+		}
+	}
 }

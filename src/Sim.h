@@ -15,7 +15,7 @@ public:
 	void finalize();
 	void reset();
 
-	int getDof();
+	int getDof() const;
 	void setDof();
 
 private:

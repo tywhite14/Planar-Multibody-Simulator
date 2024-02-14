@@ -20,10 +20,11 @@ public:
 	int getDof() const;
 	void setDof();
 
+	std::vector<Body>  bodies;
+	std::vector<Joint> joints;
+
 private:
-	std::vector<Body> _bodies;
-	std::vector<Joint> _joints;
-	unsigned int _dof;
+	unsigned short _dof;
 
 	void loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 };

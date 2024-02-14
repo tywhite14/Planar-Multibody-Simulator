@@ -18,14 +18,15 @@ struct Point
 	{ /* VOID */ }
 };
 
-enum animShape
-{
-	none = 0,
-	circle,
-	rect,
-	line
-};
-
+namespace anim {
+	enum shape
+	{
+		none = 0,
+		circle,
+		rect,
+		line
+	};
+}
 
 struct Frame
 {

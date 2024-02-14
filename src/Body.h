@@ -13,7 +13,7 @@ public:
 		Vect2d r_dotIn,
 		Vect2d phiIn,
 		Vect2d phi_dotIn,
-		animShape shapeIn,
+		anim::shape shapeIn,
 		float animHeightIn,
 		float animWidthIn,
 		float animRadiusIn,
@@ -36,7 +36,7 @@ public:
 	std::vector<Point> points;
 
 	// animation
-	animShape shape;
+	anim::shape shape;
 	float animHeight;
 	float animWidth;
 	float animRadius;

@@ -3,17 +3,18 @@
 
 Sim::Sim() : _dof(0)
 {
-	_bodies.push_back(Body());   // create ground
+	//bodies.push_back(Body());   // create ground
+	loadModel(bodies, joints);
+	log("Model loaded");
 }
 
 Sim::~Sim()
 {
-	
+	log("Sim destroyed");
 }
 
 void Sim::initialize()
 {
-	loadModel(_bodies, _joints);
 	// construct mass matrix and inv mass matrix
 
 	// gather up all points from bodies?
@@ -23,6 +24,8 @@ void Sim::initialize()
 
 void Sim::update()
 {
+	setDof();
+
 	// gather all forces?
 
 	// solve EOM
@@ -46,26 +49,27 @@ int Sim::getDof() const
 
 void Sim::setDof()
 {
-	_dof = _bodies.size() * 3;
+	_dof = (bodies.size() - 0) * 3;
 
-	for (auto& joint : _joints)
+	for (auto& joint : joints)
 	{
-		if (joint.type == jointType::rev)
+		switch (joint.type)
 		{
+		case (rev):
 			_dof -= 2;
-		}
-		else if (joint.type == jointType::tran)
-		{
+			break;
+		case(tran):
 			_dof -= 2;
-		}
-		else if (joint.type == jointType::rigid)
-		{
+			break;
+		case(rigid):
 			_dof -= 3;
-		}
-		else if (joint.type == jointType::rel_rot)
-		{
+			break;
+		case(rel_rot):
 			warn("This is incorrect. Update");
 			_dof -= 2;
+			break;
+		default:
+			error("Undefined joint type");
 		}
 	}
 }

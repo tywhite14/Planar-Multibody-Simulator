@@ -1,3 +1,4 @@
+#include "log.h"
 #include "Body.h"
 
 Body::Body() :
@@ -16,6 +17,7 @@ Body::Body() :
 	netForce(0.0),
 	netTorque(0.0)
 {
+	log("Body created");
 }
 
 Body::Body(
@@ -23,16 +25,9 @@ Body::Body(
 	double MoiIn,
 	Vect2d rIn,
 	Vect2d r_dotIn,
-	Vect2d phiIn,
-	Vect2d phi_dotIn,
-	anim::shape shapeIn,
-	float animHeightIn,
-	float animWidthIn,
-	float animRadiusIn,
-	Vect2d r_ddotIn,
-	Vect2d phi_ddotIn,
-	Vect2d netForceIn,
-	Vect2d netTorqueIn
+	double phiIn,
+	double phi_dotIn,
+	anim::shape shapeIn
 ) :
 	mass(massIn),
 	Moi(MoiIn),
@@ -41,12 +36,30 @@ Body::Body(
 	phi(phiIn),
 	phi_dot(phi_dotIn),
 	shape(shapeIn),
-	animHeight(animHeightIn),
-	animWidth(animWidthIn),
-	animRadius(animRadiusIn),
-	r_ddot(r_ddotIn),
-	phi_ddot(phi_ddotIn),
-	netForce(netForceIn),
-	netTorque(netTorqueIn)
+	animHeight(0.f),
+	animWidth(0.f),
+	animRadius(0.f),
+	r_ddot(0.0),
+	phi_ddot(0.0),
+	netForce(0.0),
+	netTorque(0.0)
 {
+	log("Body created");
 }
+
+Body::Body(const Body& b)
+{
+	log("Body copied");
+}
+
+Body::~Body()
+{
+	log("Body destroyed");
+}
+
+inline float Body::getAnimHeight() const { return animHeight; }
+inline float Body::getAnimWidth()  const { return animWidth;  }
+inline float Body::getAnimRadius() const { return animRadius; }
+inline void  Body::setAnimHeight(const float sizeIn) { animHeight = sizeIn; }
+inline void  Body::setAnimWidth(const float sizeIn)  { animWidth = sizeIn;  }
+inline void  Body::setAnimRadius(const float sizeIn) { animRadius = sizeIn; }

@@ -25,7 +25,7 @@
 				"[" << \
 				std::setw(6) << \
 				std::fixed << \
-				std::setprecision(2) << \
+				std::setprecision(4) << \
 				LOG::clock.getElapsedTime() << \
 				std::defaultfloat << "] "
 

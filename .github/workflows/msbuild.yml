@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build_and_test:
+  build:
     runs-on: windows-latest
 
     steps:
@@ -30,9 +30,11 @@ jobs:
     - name: Build project
       working-directory: ${{env.SOLUTION_FILE_PATH}}
       run: msbuild /m /p:Configuration=Debug ${{env.SOLUTION_FILE_PATH}}
-
+  
+  test:
+    runs-on: Ubuntu
     - name: Install Valgrind
-      run: choco install valgrind
+      run: sudo apt install valgrind
 
     - name: Run Valgrind
       run: valgrind --leak-check=full ./Planar-Multibody-Simulator.exe

@@ -15,6 +15,7 @@ env:
 
 jobs:
   build-lin:
+    name: Build Linux
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +34,7 @@ jobs:
       run: valgrind --leak-check=full --show-leak-kinds=all --undef-value-errors=yes --track-origins=yes build/PMS
   
   build-win:
+    name: Build Windows
     runs-on: windows-latest
 
     steps:

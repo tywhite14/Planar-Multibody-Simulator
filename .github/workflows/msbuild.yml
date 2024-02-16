@@ -11,7 +11,7 @@ on:
       - dev
 
 env:
-  BUILD_CONFIGURATION: ["Release", "Debug"]
+  BUILD_CONFIGURATION: [Release, Debug]
 
 jobs:
   build-lin:

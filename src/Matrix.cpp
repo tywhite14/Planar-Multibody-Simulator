@@ -241,6 +241,7 @@ Matrix& Matrix::operator=(const std::initializer_list<double>& list) {
 double& Matrix::operator()(unsigned int elm)
 {
 	assert(elm < _count);
+
 	return _data.at(elm);
 }
 const double& Matrix::operator()(unsigned int elm) const

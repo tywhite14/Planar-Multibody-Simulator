@@ -10,7 +10,9 @@ int main()
 	using namespace std;
 	
 	Sim sim;
-	sim.update();
+
+	while(sim.isRunning)
+		sim.update();
 
 	debug("Size of Sim: " << sizeof(sim));
 

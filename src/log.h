@@ -38,14 +38,14 @@
 		#define warn(x)  std::cout << TIMESTAMP << __LINE__ << ": " << LOG::YELLOW << "Warning: " << LOG::RESET << x << "\n"
 		#define error(x) std::cout << TIMESTAMP << __LINE__ << ": " << LOG::RED    << "Error: "   << LOG::RESET << x << "\n"
 	#else
-		#define log(x)   std::cout << TIMESTAMP << x << "\n"
+		#define debug(x)   std::cout << TIMESTAMP << x << "\n"
 		#define note(x)  std::cout << TIMESTAMP << x << "\n"
 		#define warn(x)  std::cout << TIMESTAMP << __LINE__ << ": " << "Warning: " << x << "\n"
 		#define error(x) std::cout << TIMESTAMP << __LINE__ << ": " << "Error: "   << x << "\n"
 #endif
 
 #else
-	#define log(x)
+	#define debug(x)
 	#define note(x)
 	#define warn(x)
 	#define error(x)

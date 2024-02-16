@@ -1,11 +1,30 @@
 #include "log.h"
 #include "Sim.h"
+#include "Clock.h"
 
-Sim::Sim() : _dof(0)
+Sim::Sim() : _dof(0), _nBodies(0), _nJoints(0), isRunning(true)
 {
 	//bodies.push_back(Body());   // create ground
+	Clock timer;
 	_loadModel(bodies, joints);
-	debug("Model loaded");
+	
+	//debug("Model loaded");
+
+	_nBodies = bodies.size();
+	_nJoints = joints.size();
+
+	_formMassMatrices();
+	std::cout << "Timer took " << timer.getElapsedTime() << std::endl;
+
+	debug(massMatrix);
+	debug(invMassMatrix);
+
+	// gather up all points from bodies?
+	// calcGlobalPointPos();
+
+	// gather all unit vectors?
+	// calcUnitVectors();
+
 }
 
 Sim::~Sim()
@@ -15,11 +34,6 @@ Sim::~Sim()
 
 void Sim::initialize()
 {
-	// construct mass matrix and inv mass matrix
-
-	// gather up all points from bodies?
-
-	// gather all unit vectors?
 }
 
 void Sim::update()
@@ -29,12 +43,13 @@ void Sim::update()
 	// gather all forces?
 
 	// solve EOM
-	
+	finalize();
 }
 
 void Sim::finalize()
 {
-	
+	isRunning = false;
+	debug("Shutting down sim");
 }
 
 void Sim::reset()
@@ -70,6 +85,29 @@ void Sim::setDof()
 			break;
 		default:
 			error("Undefined joint type");
+		}
+	}
+}
+
+
+//	PRIVATE
+
+void Sim::_formMassMatrices()
+{
+	const unsigned int nB3 = _nBodies * 3;
+	massMatrix    = Matrix(nB3);
+	invMassMatrix = Matrix(nB3);
+
+	for (int i = 0; i < nB3; i++)
+	{
+		int idx = (nB3 + 1) * i;
+		if ((idx+1) % 3 ==  0) {
+			massMatrix(idx) = bodies.at(i / 3).Moi;
+			invMassMatrix(idx) = 1.0 / bodies.at(i / 3).Moi;
+		}
+		else {
+			massMatrix(idx) = bodies.at(i / 3).mass;
+			invMassMatrix(idx) = 1.0 / bodies.at(i / 3).mass;
 		}
 	}
 }

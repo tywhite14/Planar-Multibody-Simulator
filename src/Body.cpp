@@ -17,6 +17,7 @@ Body::Body() :
 	netForce(0.0),
 	netTorque(0.0)
 {
+	points.reserve(2);
 	debug("Body created");
 }
 
@@ -49,6 +50,7 @@ Body::Body(
 
 Body::Body(const Body& b)
 {
+	*this = b;
 	debug("Body copied");
 }
 
@@ -61,5 +63,5 @@ inline float Body::getAnimHeight() const { return animHeight; }
 inline float Body::getAnimWidth()  const { return animWidth;  }
 inline float Body::getAnimRadius() const { return animRadius; }
 inline void  Body::setAnimHeight(const float sizeIn) { animHeight = sizeIn; }
-inline void  Body::setAnimWidth(const float sizeIn)  { animWidth = sizeIn;  }
+inline void  Body::setAnimWidth (const float sizeIn) { animWidth = sizeIn;  }
 inline void  Body::setAnimRadius(const float sizeIn) { animRadius = sizeIn; }

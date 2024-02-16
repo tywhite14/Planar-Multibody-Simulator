@@ -28,7 +28,7 @@ jobs:
       run: cmake . && make
 
     - name: Run Valgrind
-      run: valgrind --leak-check=full --show-leak-kinds=all --undef-value-errors=yes --track-origins=yes build/PMS
+      run: valgrind --leak-check=full --show-leak-kinds=all --undef-value-errors=yes --track-origins=yes ./PMS
   
   build-win:
     name: Build Windows

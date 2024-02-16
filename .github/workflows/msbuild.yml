@@ -10,9 +10,6 @@ on:
       - main
       - dev
 
-env:
-  BUILD_CONFIGURATION: [Release, Debug]
-
 jobs:
   build-lin:
     name: Build Linux
@@ -37,6 +34,10 @@ jobs:
     name: Build Windows
     runs-on: windows-latest
 
+    strategy:
+      matrix:
+        BUILD_CONFIGURATION: [Release, Debug]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -46,4 +47,4 @@ jobs:
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} .
+      run: msbuild /m /p:Configuration=${{matrix.BUILD_CONFIGURATION}} .

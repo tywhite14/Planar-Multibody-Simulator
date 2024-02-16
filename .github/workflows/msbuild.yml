@@ -1,4 +1,8 @@
-name: Build and Test
+# Manually-triggered
+# Build MSVC Project
+# Run with Valgrind
+
+name: Memory Check
 
 on:
   push:
@@ -6,36 +10,21 @@ on:
       - main
       - dev
 
-env:
-  SOLUTION_FILE_PATH: .
-
-permissions:
-  contents: read
-
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
-
-    - name: Restore NuGet packages
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y valgrind cmake
 
     - name: Build project
-      working-directory: ${{env.SOLUTION_FILE_PATH}}
-      run: msbuild /m /p:Configuration=Debug ${{env.SOLUTION_FILE_PATH}}
-  
-  test:
-    runs-on: Ubuntu
-    - name: Install Valgrind
-      run: sudo apt install valgrind
+      run: cmake . && make
 
     - name: Run Valgrind
-      run: valgrind --leak-check=full ./Planar-Multibody-Simulator.exe
-      working-directory: path/to/your/project
+      run: valgrind --leak-check=full --show-leak-kinds=all --undef-value-errors=yes --track-origins=yes build/PMS

@@ -1,5 +1,6 @@
 #include <cassert>
 #include <iomanip>
+#include <cmath>
 
 #include "log.h"
 #include "Matrix.h"

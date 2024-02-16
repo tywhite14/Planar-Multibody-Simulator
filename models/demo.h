@@ -1,6 +1,4 @@
-#define _USE_MATH_DEFINES
-
-#include <math.h>
+#include "../src/Utils.h"
 #include "../src/PMS.h"
 
 void Sim::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
@@ -12,7 +10,7 @@ void Sim::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 		0.5,
 		Vect2d(1.0, 0.0),
 		Vect2d(1.0, 0.0),
-		M_PI / 3.0,
+		PI / 3.0,
 		0.0,
 		anim::none
 	);
@@ -22,7 +20,7 @@ void Sim::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 		0.85,
 		Vect2d(0.0, 1.2),
 		Vect2d(-0.20, 0.4),
-		M_PI / 10.0,
+		PI / 10.0,
 		0.0,
 		anim::circle
 	);

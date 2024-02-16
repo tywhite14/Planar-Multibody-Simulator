@@ -1,34 +1,24 @@
 #pragma once
 
+#include <iostream>
 
-struct Vect2d
+class Vect2d
 {
+public:
 	double x, y;
 
 	Vect2d();
 	Vect2d(double a, double b);
 	Vect2d(double b);
 
-	Vect2d operator+(const Vect2d& b) const {
-		return { x + b.x, y + b.y };
-	}
-	Vect2d operator-(const Vect2d& b) const {
-		return { x - b.x, y - b.y };
-	}
-	Vect2d operator-() const {
-		return { -x, -y };
-	}
-	Vect2d operator*(double s) const {
-		return { x * s, y * s };
-	}
-	Vect2d operator/(double s) const {
-		return Vect2d(x / s, y / s);
-	}
-	bool operator==(Vect2d& b) const {
-		if ((x == b.x) && (y == b.y))
-			return true;
-		else
-			return false;
-	}
-};
+	Vect2d operator+(const Vect2d& b) const;
+	Vect2d operator-(const Vect2d& b) const;
+	Vect2d operator-() const;
+	Vect2d operator*(double s) const;
+	Vect2d operator/(double s) const;
+	bool   operator==(Vect2d& b) const;
 
+	Vect2d rotate(const double angle) const;
+	Vect2d rotate90() const;
+	friend std::ostream& operator<<(std::ostream& os, const Vect2d& vec);
+};

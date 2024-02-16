@@ -12,7 +12,7 @@ int main()
 	Sim sim;
 	sim.update();
 
-	log("Size of Sim: " << sizeof(sim));
+	debug("Size of Sim: " << sizeof(sim));
 
 	return 0;
 }

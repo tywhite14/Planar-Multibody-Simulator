@@ -17,7 +17,7 @@ Body::Body() :
 	netForce(0.0),
 	netTorque(0.0)
 {
-	log("Body created");
+	debug("Body created");
 }
 
 Body::Body(
@@ -44,17 +44,17 @@ Body::Body(
 	netForce(0.0),
 	netTorque(0.0)
 {
-	log("Body created");
+	debug("Body created");
 }
 
 Body::Body(const Body& b)
 {
-	log("Body copied");
+	debug("Body copied");
 }
 
 Body::~Body()
 {
-	log("Body destroyed");
+	debug("Body destroyed");
 }
 
 inline float Body::getAnimHeight() const { return animHeight; }

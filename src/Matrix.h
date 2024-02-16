@@ -34,6 +34,7 @@ public:
 	Matrix inverse() const;
 	Matrix transpose() const;
 	Matrix identity() const;
+	Matrix rotation(const double angle) const;
 	Matrix operator-() const;
 	Matrix operator+(const Matrix& b) const;
 	Matrix operator-(const Matrix& b) const;

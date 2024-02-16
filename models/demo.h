@@ -1,4 +1,4 @@
-#include "../src/Utils.h"
+#include <cmath>
 #include "../src/PMS.h"
 
 void Sim::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
@@ -8,9 +8,9 @@ void Sim::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 	bodies.emplace_back(
 		1.0,
 		0.5,
-		Vect2d(1.0, 0.0),
-		Vect2d(1.0, 0.0),
-		PI / 3.0,
+		(1.0, 0.0),
+		(1.0, 0.0),
+		math::PI_3,
 		0.0,
 		anim::none
 	);
@@ -18,9 +18,9 @@ void Sim::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 	bodies.emplace_back(
 		2.0,
 		0.85,
-		Vect2d(0.0, 1.2),
-		Vect2d(-0.20, 0.4),
-		PI / 10.0,
+		(0.0, 1.2),
+		(-0.20, 0.4),
+		math::PI / 10.0,
 		0.0,
 		anim::circle
 	);

@@ -5,12 +5,12 @@ Sim::Sim() : _dof(0)
 {
 	//bodies.push_back(Body());   // create ground
 	_loadModel(bodies, joints);
-	log("Model loaded");
+	debug("Model loaded");
 }
 
 Sim::~Sim()
 {
-	log("Sim destroyed");
+	debug("Sim destroyed");
 }
 
 void Sim::initialize()

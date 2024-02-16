@@ -120,6 +120,13 @@ Matrix Matrix::identity() const
 	return res;
 }
 
+Matrix Matrix::rotation(const double angle) const
+{
+	return Matrix(2, 2,
+		{ cos(angle), -sin(angle),
+		  sin(angle),  cos(angle) });
+}
+
 Matrix Matrix::operator-() const
 {
 	Matrix res(_rows, _cols);
@@ -168,6 +175,16 @@ Matrix Matrix::operator*(const Matrix& b) const
 	}
 
 	return res;
+}
+
+Vect2d Matrix::operator*(const Vect2d& v) const
+{
+	assert(_rows == _cols && _rows == 2);
+
+	return Vect2d(
+		_data.at(0) * v.x + _data.at(1) * v.y,
+		_data.at(2) * v.x + _data.at(3) * v.y
+	);
 }
 
 Matrix Matrix::operator*(const double s) const

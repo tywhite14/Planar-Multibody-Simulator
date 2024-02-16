@@ -6,6 +6,7 @@
 #include "Clock.h"
 
 #ifdef _DEBUG
+
 	namespace LOG
 	{
 		constexpr auto RESET   = "\x1b[0m";
@@ -30,9 +31,9 @@
 				std::defaultfloat << "] "
 
 	#define COLORED_OUTPUT
-
+	
 	#ifdef COLORED_OUTPUT
-		#define log(x)   std::cout << TIMESTAMP << x << "\n"
+		#define debug(x)   std::cout << TIMESTAMP << x << "\n"
 		#define note(x)  std::cout << TIMESTAMP << LOG::GREEN  << x << LOG::RESET << "\n"
 		#define warn(x)  std::cout << TIMESTAMP << __LINE__ << ": " << LOG::YELLOW << "Warning: " << LOG::RESET << x << "\n"
 		#define error(x) std::cout << TIMESTAMP << __LINE__ << ": " << LOG::RED    << "Error: "   << LOG::RESET << x << "\n"

@@ -12,9 +12,7 @@ int main()
 	Sim sim;
 	sim.update();
 
-	log("sim "    << sizeof(sim) << " bytes");
-	log("bodies " << sizeof(sim.bodies) << " bytes");
-	log("joints " << sizeof(sim.joints) << " bytes");
-	
+	log("Size of Sim: " << sizeof(sim));
+
 	return 0;
 }

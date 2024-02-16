@@ -58,16 +58,18 @@ const double Matrix::det() const
 		return _data.at(0);
 	if (_rows == 2)
 		return _data.at(0) * _data.at(3) - _data.at(1) * _data.at(2);
-	if (_rows == 3)
-		return 
-		_data.at(0) * _data.at(4) * _data.at(8) +
-		_data.at(1) * _data.at(5) * _data.at(6) +
-		_data.at(2) * _data.at(3) * _data.at(7) -
-		_data.at(2) * _data.at(4) * _data.at(6) -
-		_data.at(1) * _data.at(3) * _data.at(8) -
-		_data.at(0) * _data.at(5) * _data.at(7);
-	if (_rows > 3)
+	if (_rows == 3) {
+		return
+			_data.at(0) * _data.at(4) * _data.at(8) +
+			_data.at(1) * _data.at(5) * _data.at(6) +
+			_data.at(2) * _data.at(3) * _data.at(7) -
+			_data.at(2) * _data.at(4) * _data.at(6) -
+			_data.at(1) * _data.at(3) * _data.at(8) -
+			_data.at(0) * _data.at(5) * _data.at(7);
+	}
+	if (_rows > 3) {
 		error("Not implemented yet");
+	}
 
 	return 0.0;
 }
@@ -83,9 +85,9 @@ Matrix Matrix::inverse() const
 		res(0) = 1.0 / _data.at(0);
 		return res;
 	}
-	if (_rows == 2)
+	if (_rows == 2) {
 		error("Not implemented yet");
-
+	}
 
 	return Matrix();
 }

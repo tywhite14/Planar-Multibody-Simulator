@@ -26,5 +26,5 @@ public:
 private:
 	unsigned short _dof;
 
-	void loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
+	void _loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 };

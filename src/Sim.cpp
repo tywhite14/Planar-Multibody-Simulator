@@ -4,7 +4,7 @@
 Sim::Sim() : _dof(0)
 {
 	//bodies.push_back(Body());   // create ground
-	loadModel(bodies, joints);
+	_loadModel(bodies, joints);
 	log("Model loaded");
 }
 

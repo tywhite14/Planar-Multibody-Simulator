@@ -2,7 +2,7 @@
 # Build MSVC Project
 # Run with Valgrind
 
-name: Memory Check
+name: Cross-Platform Build
 
 on:
   push:
@@ -10,13 +10,16 @@ on:
       - main
       - dev
 
+env:
+  BUILD_CONFIGURATION: ["Release", "Debug"]
+
 jobs:
-  build:
+  build-lin:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
@@ -28,3 +31,17 @@ jobs:
 
     - name: Run Valgrind
       run: valgrind --leak-check=full --show-leak-kinds=all --undef-value-errors=yes --track-origins=yes build/PMS
+  
+  build-win:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} .

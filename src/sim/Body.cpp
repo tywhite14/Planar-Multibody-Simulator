@@ -45,6 +45,7 @@ Body::Body(
 	netForce(0.0),
 	netTorque(0.0)
 {
+	points.reserve(2);
 	debug("Body created");
 }
 

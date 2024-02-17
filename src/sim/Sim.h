@@ -5,7 +5,7 @@
 #include "Body.h"
 #include "Joint.h"
 #include "Matrix.h"
-#include "Structs.h"
+#include "Point.h"
 
 class Sim
 {

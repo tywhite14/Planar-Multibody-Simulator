@@ -1,8 +1,9 @@
 #include <cassert>
-#include "log.h"
-#include "Matrix.h"
-#include "Sim.h"
-#include "Clock.h"
+
+#include "utils/log.h"
+#include "utils/Matrix.h"
+#include "sim/Sim.h"
+#include "utils/Clock.h"
 #include "../models/demo.h"
 
 int main()

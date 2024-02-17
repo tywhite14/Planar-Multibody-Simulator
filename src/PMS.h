@@ -1,6 +1,6 @@
 #pragma once
 
-#include "constants.h"
-#include "Body.h"
-#include "Joint.h"
-#include "Sim.h"
+#include "sim/constants.h"
+#include "sim/Body.h"
+#include "sim/Joint.h"
+#include "sim/Sim.h"

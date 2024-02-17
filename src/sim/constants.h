@@ -17,3 +17,13 @@ namespace math
 	constexpr double SQRT2     = 1.41421356237309504880;   // sqrt(2)
 	constexpr double M_1_SQRT2 = 0.707106781186547524401;  // 1/sqrt(2)
 }
+
+namespace anim {
+	enum shape
+	{
+		none = 0,
+		circle,
+		rect,
+		line
+	};
+}

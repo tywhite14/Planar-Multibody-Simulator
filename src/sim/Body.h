@@ -1,6 +1,9 @@
 #pragma once
+
 #include <vector>
-#include "Structs.h"
+
+#include "constants.h"
+#include "Point.h"
 
 class Body
 {

@@ -42,6 +42,8 @@ public:
 	double phi_dot;
 
 	std::vector<Point> points;
+	std::vector<Force*> forces;
+	unsigned int sysIndex;
 
 	// animation
 	anim::shape shape;

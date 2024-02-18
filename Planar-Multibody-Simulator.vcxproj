@@ -93,8 +93,7 @@
     <ClCompile Include="src\sim\Joint.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\Matrix.cpp" />
-    <ClCompile Include="src\sim\Sim.cpp" />
-    <ClCompile Include="src\sim\Solver.cpp" />
+    <ClCompile Include="src\sim\System.cpp" />
     <ClCompile Include="src\utils\Utils.cpp" />
     <ClCompile Include="src\utils\Vect2d.cpp" />
   </ItemGroup>
@@ -109,8 +108,7 @@
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\utils\Matrix.h" />
     <ClInclude Include="src\PMS.h" />
-    <ClInclude Include="src\sim\Sim.h" />
-    <ClInclude Include="src\sim\Solver.h" />
+    <ClInclude Include="src\sim\System.h" />
     <ClInclude Include="src\sim\Point.h" />
     <ClInclude Include="src\utils\Utils.h" />
     <ClInclude Include="src\utils\Vect2d.h" />

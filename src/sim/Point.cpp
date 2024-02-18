@@ -10,11 +10,12 @@ Point::Point() :
 	debug("Point created");
 }
 
-Point::Point(Vect2d sPlocal) :
+Point::Point(Body b, Vect2d sPlocal) :
 	rP(0),
 	rP_dot(0),
 	rP_ddot(0),
-	sP_local(sPlocal)
+	sP_local(sPlocal),
+	bIndex(b.sysIndex)
 { 
 	debug("Point created");
 }
@@ -28,4 +29,9 @@ Point::Point(const Point& p)
 {
 	*this = p;
 	debug("Point destroyed");
+}
+
+void Point::onBody(Body& body)
+{
+	body.points.emplace_back(*this);
 }

@@ -1,4 +1,6 @@
 #pragma once
+
+#include "Body.h"
 #include "Vect2d.h"
 
 class Point
@@ -11,7 +13,9 @@ public:
 	unsigned int bIndex;
 
 	Point();
-	Point(Vect2d sPlocal);
+	Point(Body b, Vect2d sPlocal);
 	~Point();
 	Point(const Point& p);
+	
+	void onBody(Body& body);
 };

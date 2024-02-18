@@ -9,6 +9,8 @@ enum jointType
 	rev,
 	tran,
 	rel_rot,
+	rel_tran,
+	roll,
 	rigid
 };
 

@@ -27,10 +27,7 @@
     <ClCompile Include="src\sim\Joint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\sim\Sim.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sim\Solver.cpp">
+    <ClCompile Include="src\sim\System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sim\Point.cpp">
@@ -74,10 +71,7 @@
     <ClInclude Include="src\PMS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\sim\Sim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sim\Solver.h">
+    <ClInclude Include="src\sim\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\sim\Point.h">

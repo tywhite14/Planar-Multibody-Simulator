@@ -46,6 +46,7 @@ Body::Body(
 	netTorque(0.0)
 {
 	points.reserve(2);
+	forces.reserve(2);
 	debug("Body created");
 }
 

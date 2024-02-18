@@ -24,6 +24,7 @@ Joint::~Joint()
 
 Joint::Joint(const Joint& j)
 {
+	*this = j;
 	debug("Joint destroyed");
 }
 
@@ -57,6 +58,7 @@ void Joint::_initialize()
 		Rhs = Matrix(0);
 		break;
 
+	case(none):
 	default:
 		error("Undefined joint type");
 	}

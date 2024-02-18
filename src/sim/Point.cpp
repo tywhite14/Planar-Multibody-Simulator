@@ -26,5 +26,6 @@ Point::~Point()
 
 Point::Point(const Point& p)
 {
+	*this = p;
 	debug("Point destroyed");
 }

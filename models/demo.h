@@ -52,24 +52,24 @@ void Sim::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 	bodies.at(1).points.emplace_back(Vect2d(0, -L2 / 2.0));
 
 
-	// JOINTS
-	joints.reserve(2);
+	//// JOINTS
+	//joints.reserve(2);
 
-	Joint r1;
-	Joint r2;
+	//Joint r1;
+	//Joint r2;
 
-	r1.type = jointType::rev;
-	r1.iBindex = 0;
-	r1.jBindex = 1;
-	r1.iPindex = 0;
-	r1.jPindex = 0;
+	//r1.type = jointType::rev;
+	//r1.iBindex = 0;
+	//r1.jBindex = 1;
+	//r1.iPindex = 0;
+	//r1.jPindex = 0;
 
-	r2.type = jointType::rev;
-	r2.iBindex = 1;
-	r2.jBindex = 2;
-	r2.iPindex = 1;
-	r2.jPindex = 0;
+	//r2.type = jointType::rev;
+	//r2.iBindex = 1;
+	//r2.jBindex = 2;
+	//r2.iPindex = 1;
+	//r2.jPindex = 0;
 
-	joints.emplace_back(r1);
-	joints.emplace_back(r2);
+	//joints.emplace_back(r1);
+	//joints.emplace_back(r2);
 }

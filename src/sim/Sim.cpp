@@ -4,7 +4,7 @@
 
 #pragma warning(disable : 4267)
 
-Sim::Sim() : _dof(0), _nBodies(0), _nJoints(0), isRunning(true)
+Sim::Sim() : _dof(0), isRunning(true), gravity(9.8)
 {
 	note("Sim created");
 
@@ -12,8 +12,6 @@ Sim::Sim() : _dof(0), _nBodies(0), _nJoints(0), isRunning(true)
 	debug("Model loaded");
 
 	setDof();
-	_nBodies = bodies.size();
-	_nJoints = joints.size();
 
 	_formMassMatrices();
 
@@ -86,7 +84,7 @@ void Sim::setDof()
 
 void Sim::_formMassMatrices()
 {
-	const unsigned int nB3 = _nBodies * 3;
+	const unsigned int nB3 = bodies.size() * 3;
 	massMatrix    = Matrix(nB3);
 	invMassMatrix = Matrix(nB3);
 

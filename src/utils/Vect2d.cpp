@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cmath>
 #include <iomanip>
 
 #include "Vect2d.h"
@@ -45,6 +46,21 @@ Vect2d Vect2d::rotate(const double angle) const
 Vect2d Vect2d::rotate90() const
 {
 	return Vect2d(-y, x);
+}
+
+double Vect2d::mag()
+{
+	return sqrt(x * x + y * y);
+}
+
+double Vect2d::angle()
+{
+	return atan2(y, x);
+}
+
+Vect2d Vect2d::unit()
+{
+	return *this / mag();
 }
 
 std::ostream& operator<<(std::ostream& os, const Vect2d& vec)

@@ -27,10 +27,12 @@ public:
 
 private:
 	unsigned short _dof;
-	unsigned int _nBodies;
-	unsigned int _nJoints;
+	double gravity;
 	Matrix massMatrix;
 	Matrix invMassMatrix;
+	Matrix sysState;
+	Matrix forcesApplied;
+	Matrix forcesReaction;
 
 	void _loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 	void _formMassMatrices();

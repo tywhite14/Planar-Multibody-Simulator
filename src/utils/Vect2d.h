@@ -20,5 +20,8 @@ public:
 
 	Vect2d rotate(const double angle) const;
 	Vect2d rotate90() const;
+	double mag();
+	double angle();
+	Vect2d unit();
 	friend std::ostream& operator<<(std::ostream& os, const Vect2d& vec);
 };

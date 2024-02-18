@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Body.h"
 #include "Point.h"
 #include "Vect2d.h"
 
@@ -12,8 +13,7 @@ public:
 	~Force();
 	Force(const Force& f);
 
-	void apply(Vect2d location);
-	Point getApplicationPoint() const;
+	void apply(Point& location);
+
 	Point applicationPoint;
-	Vect2d forceVector;
 };

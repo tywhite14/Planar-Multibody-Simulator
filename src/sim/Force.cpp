@@ -3,17 +3,17 @@
 #include "Force.h"
 #include "log.h"
 
-Force::Force() : forceVector(0)
+Force::Force()
 {
 	debug("Force created");
 }
 
-Force::Force(Vect2d fIn) : forceVector(0)
+Force::Force(Vect2d fIn)
 {
 	debug("Force created");
 }
 
-Force::Force(double a, double b) : forceVector(0)
+Force::Force(double a, double b)
 {
 	debug("Force created");
 }
@@ -29,12 +29,7 @@ Force::Force(const Force& f)
 	debug("Force copied");
 }
 
-void Force::apply(Vect2d location)
+void Force::apply(Point& location)
 {
 	applicationPoint = location;
-}
-
-Point Force::getApplicationPoint() const
-{
-	return applicationPoint;
 }

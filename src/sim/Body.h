@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "constants.h"
+#include "Force.h"
 #include "Point.h"
 
 class Body

@@ -7,14 +7,13 @@
 Sim::Sim() : _dof(0), isRunning(true), gravity(9.8)
 {
 	note("Sim created");
-
+	Clock timer;
 	_loadModel(bodies, joints);
 	debug("Model loaded");
 
 	setDof();
 
 	_formMassMatrices();
-
 }
 
 Sim::~Sim()

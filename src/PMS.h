@@ -4,3 +4,4 @@
 #include "sim/Body.h"
 #include "sim/Joint.h"
 #include "sim/Sim.h"
+#include "sim/SpringDamper.h"

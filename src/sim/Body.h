@@ -6,6 +6,8 @@
 #include "Force.h"
 #include "Point.h"
 
+class Point;
+
 class Body
 {
 public:
@@ -42,7 +44,7 @@ public:
 	double phi_dot;
 
 	std::vector<Point> points;
-	std::vector<Force*> forces;
+	//std::vector<Force*> forces;
 	unsigned int sysIndex;
 
 	// animation

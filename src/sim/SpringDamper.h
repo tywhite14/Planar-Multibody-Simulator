@@ -1,17 +1,20 @@
 #pragma once
 
-#include "Force.h"
+#include "ForceGenerator.h"
 #include "Vect2d.h"
 
-class SpringDamper : public Force
+class SpringDamper : public ForceGenerator
 {
 public:
-	Vect2d getNetForce();
-
-	double springConstant;
-	double dampingCoeff;
-	double natLength;
-	double length;
+	SpringDamper();
+	SpringDamper(const Point& A, const Point& B);
+	Force& getForce() override;
 	Point originPoint;
-};
+	double dampingCoeff;
+	double springConstant;
+	double natLength;
 
+private:
+	void m_calculateForce();
+	double length;
+};

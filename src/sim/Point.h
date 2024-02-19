@@ -3,6 +3,8 @@
 #include "Body.h"
 #include "Vect2d.h"
 
+class Body;
+
 class Point
 {
 public:

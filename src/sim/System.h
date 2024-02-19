@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "Body.h"
-#include "Force.h"
+#include "ForceGenerator.h"
 #include "Joint.h"
 #include "Matrix.h"
 #include "Point.h"
@@ -22,8 +22,8 @@ public:
 	int getDof() const;
 	void setDof();
 
-	void applyForce(Force& f, Body& b);		 // applies force f to CoM of body b
-	void applyForce(Force& f, Point& p); // applies force f to point p
+	//void applyForce(Force& f, Body& b);		 // applies force f to CoM of body b
+	//void applyForce(Force& f, Point& p); // applies force f to point p
 	void applyGravity(bool flag);
 	
 	void addBodies(std::initializer_list<Body> bodiesIn);
@@ -34,6 +34,7 @@ public:
 	std::vector<Body>  bodies;
 	std::vector<Joint> joints;
 	std::vector<Force> forces;
+	std::vector<ForceGenerator*> FGs;
 
 	double kineticEnergy;
 	double potentialEnergy;
@@ -57,9 +58,9 @@ private:
 	Matrix lagranges;		// system Lagrange multipliers
 	Matrix sysRhs;			// right-hand side of system equation
 	
-	// sysCoeff(M, D)
-	// sysRhs(h_R, D, c_dot)
-	// sysState = inv(coeffMat) * sysRhs
+	// coeffMat(M, D)						[bodies and joints]
+	// sysRhs(h_A, D_dot, c_dot)			[forces and joints]
+	// sysState = inv(coeffMat) * sysRhs	[bodies , joints, and bodies]
 
 	void _loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 	void _formMassMatrices();

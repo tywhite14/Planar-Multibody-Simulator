@@ -10,12 +10,10 @@ int main()
 {
 	using namespace std;
 	
-	System sim;
+	System* sim = new System;
 
-	while(sim.isRunning)
-		sim.update();
-
-	debug("Size of System: " << sizeof(sim));
+	while(sim->isRunning)
+		sim->update();
 
 	return 0;
 }

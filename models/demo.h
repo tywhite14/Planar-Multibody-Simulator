@@ -29,6 +29,7 @@ void System::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 
 
 	// POINTS ===============
+	Point C0 = Point(gnd, Vect2d(0.0, 7.5));
 
 	Point A1 = Point(b1, Vect2d(-L1 / 2.0, 0.0));
 	Point B1 = Point(b1, Vect2d( L1 / 2.0, 0.0));
@@ -36,7 +37,7 @@ void System::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 	Point A2 = Point(b2, Vect2d(-L2 / 2.0, 0.0));
 	Point B2 = Point(b2, Vect2d( L2 / 2.0, 0.0));
 
-	addPoints({ A1, B1, A2, B2 });
+	addPoints({ C0, A1, B1, A2, B2 });
 
 
 	// JOINTS ===============
@@ -68,13 +69,14 @@ void System::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 
 	forces.emplace_back(f1);
 
-	SpringDamper sd1;
-	
-	sd1.natLength = 1.2;
-	sd1.dampingCoeff = 0.4;
-	sd1.springConstant = 2200.0;
+	SpringDamper sd1(C0, A1);
+	sd1.dampingCoeff = 0.5;
+	sd1.springConstant = 850;
+	sd1.natLength = 1.0;
 
-	applyForce(f1, B1);
-	applyForce(f1, A2);
+//	addForces({f1, sd1});
+
+//	applyForce(f1, B1);
+//	applyForce(f1, A2);
 	applyGravity(true);
 }

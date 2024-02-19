@@ -28,6 +28,7 @@ System::System() : _dof(0), isRunning(true), g(0.0, -9.8)
 System::~System()
 {
 	debug("System destroyed");
+	delete(this);
 }
 
 void System::initialize()
@@ -37,6 +38,13 @@ void System::initialize()
 void System::update()
 {
 	setDof();
+
+	// calculate force from each FG and add it to forces vector
+	for (auto& FG : FGs)
+	{
+		forces.emplace_back(FG->getForce());
+	}
+
 	//_formSystemRhs();
 	//_solveSystemEquation();
 	//_integrate(double dt);
@@ -86,54 +94,31 @@ void System::setDof()
 	}
 }
 
-
-//	PRIVATE
-
-void System::_formMassMatrices()
-{
-	const unsigned int nB3 = bodies.size() * 3;
-	M    = Matrix(nB3);
-	M_inv = Matrix(nB3);
-
-	for (unsigned int i = 0; i < nB3; i++)
-	{
-		int idx = (nB3 + 1) * i;
-		if ((idx+1) % 3 ==  0) {
-			M(idx) = bodies.at(i / 3).Moi;
-			M_inv(idx) = 1.0 / bodies.at(i / 3).Moi;
-		}
-		else {
-			M(idx) = bodies.at(i / 3).mass;
-			M_inv(idx) = 1.0 / bodies.at(i / 3).mass;
-		}
-	}
-}
-
-void System::applyForce(const Force& f, Body& b)
-{
-	// add f to sim.forces vector
-	forces.emplace_back(f);
-
-	// add f pointer to b.forces
-	b.forces.emplace_back(&forces.at(0));
-}
-
-void System::applyForce(Force& f, Point& p)
-{
-	f.applicationPoint = p;
-	Body& b = bodies.at(p.bIndex);	
-}
+//void System::applyForce(const Force& f, Body& b)
+//{
+//	// add f to sim.forces vector
+//	forces.emplace_back(f);
+//
+//	// add f pointer to b.forces
+//	b.forces.emplace_back(&forces.at(0));
+//}
+//
+//void System::applyForce(Force& f, Point& p)
+//{
+//	f.applicationPoint = p;
+//	Body& b = bodies.at(p.bIndex);
+//}
 
 void System::applyGravity(bool flag)
 {
 	if (!flag)
 		return;
 
-	Force gravity(g);
+	//Force gravity(g);
 
 	for (Body& b : bodies)
 	{
-		applyForce(gravity, b);
+		//applyForce(gravity, b);
 	}
 }
 
@@ -160,5 +145,28 @@ void System::addJoints(std::initializer_list<Joint> jointsIn)
 	for (auto& j : jointsIn)
 	{
 		joints.emplace_back(j);
+	}
+}
+
+
+//	PRIVATE
+
+void System::_formMassMatrices()
+{
+	const unsigned int nB3 = bodies.size() * 3;
+	M    = Matrix(nB3);
+	M_inv = Matrix(nB3);
+
+	for (unsigned int i = 0; i < nB3; i++)
+	{
+		int idx = (nB3 + 1) * i;
+		if ((idx+1) % 3 ==  0) {
+			M(idx) = bodies.at(i / 3).Moi;
+			M_inv(idx) = 1.0 / bodies.at(i / 3).Moi;
+		}
+		else {
+			M(idx) = bodies.at(i / 3).mass;
+			M_inv(idx) = 1.0 / bodies.at(i / 3).mass;
+		}
 	}
 }

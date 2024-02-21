@@ -67,16 +67,11 @@ void System::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 	
 	f1.value = Vect2d(5, 0);
 
-	forces.emplace_back(f1);
-
 	SpringDamper sd1(C0, A1);
 	sd1.dampingCoeff = 0.5;
 	sd1.springConstant = 850;
 	sd1.natLength = 1.0;
 
-//	addForces({f1, sd1});
-
-//	applyForce(f1, B1);
-//	applyForce(f1, A2);
+	addForces({ sd1});
 	applyGravity(true);
 }

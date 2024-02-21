@@ -22,19 +22,16 @@ public:
 	int getDof() const;
 	void setDof();
 
-	//void applyForce(Force& f, Body& b);		 // applies force f to CoM of body b
-	//void applyForce(Force& f, Point& p); // applies force f to point p
 	void applyGravity(bool flag);
 	
-	void addBodies(std::initializer_list<Body> bodiesIn);
+	void addBodies(std::initializer_list<Body>  bodiesIn);
 	void addPoints(std::initializer_list<Point> pointsIn);
 	void addJoints(std::initializer_list<Joint> jointsIn);
+	void addForces(std::vector<ForceGenerator*> FGsIn);
 
 	Body gnd;
-	std::vector<Body>  bodies;
-	std::vector<Joint> joints;
-	std::vector<Force> forces;
-	std::vector<ForceGenerator*> FGs;
+	std::vector<Body>  sysBodies;
+	std::vector<Joint> sysJoints;
 
 	double kineticEnergy;
 	double potentialEnergy;
@@ -43,8 +40,9 @@ public:
 	bool isRunning;
 
 private:
+	unsigned int _nBodies;	// number of bodies in the system
 	unsigned short _dof;	// degrees of freedom of the system
-	const Vect2d g;			// acceleration due to gravity
+	const double g;			// acceleration due to gravity
 	Matrix M;				// system mass matrix
 	Matrix M_inv;			// inverse of system mass matrix
 	Matrix c;				// system coordinates
@@ -62,6 +60,9 @@ private:
 	// sysRhs(h_A, D_dot, c_dot)			[forces and joints]
 	// sysState = inv(coeffMat) * sysRhs	[bodies , joints, and bodies]
 
+	void _calcKineticEnergy();
+	void _calcPotentialEnergy();
+	void _calcTotalEnergy();
 	void _loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 	void _formMassMatrices();
 };

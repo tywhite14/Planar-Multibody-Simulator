@@ -7,6 +7,7 @@
 #include "Point.h"
 
 class Point;
+struct Force;
 
 class Body
 {
@@ -44,7 +45,8 @@ public:
 	double phi_dot;
 
 	std::vector<Point> points;
-	//std::vector<Force*> forces;
+	std::vector<Force*> appliedForces;
+	std::vector<double> appliedMoments;
 	unsigned int sysIndex;
 
 	// animation

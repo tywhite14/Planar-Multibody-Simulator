@@ -6,7 +6,7 @@
 struct Force
 {
 	Force() : value(Vect2d()), appliedPoint(Point()) { }
-	Force(const Vect2d& val, const Point& p) : value(val), appliedPoint(p) { }
+	Force(const Vect2d& val, const Point& p = Point()) : value(val), appliedPoint(p) { }
 
 	Vect2d value;
 	Point appliedPoint;
@@ -17,7 +17,7 @@ class ForceGenerator
 public:
 	ForceGenerator();
 
-	virtual Force& getForce();
+	virtual Force& getForce() = 0;
 
 protected:
 	void setForce(const Force& f);

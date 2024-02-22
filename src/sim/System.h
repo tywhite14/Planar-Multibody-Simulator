@@ -27,11 +27,12 @@ public:
 	void addBodies(std::initializer_list<Body>  bodiesIn);
 	void addPoints(std::initializer_list<Point> pointsIn);
 	void addJoints(std::initializer_list<Joint> jointsIn);
-	void addForces(std::vector<ForceGenerator*> FGsIn);
+	void addForces(std::initializer_list<ForceGenerator> FGsIn);
 
 	Body gnd;
 	std::vector<Body>  sysBodies;
 	std::vector<Joint> sysJoints;
+	std::vector<ForceGenerator*> sysFGs;
 
 	double kineticEnergy;
 	double potentialEnergy;

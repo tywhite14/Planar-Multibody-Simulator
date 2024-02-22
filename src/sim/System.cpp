@@ -9,7 +9,7 @@ System::System() : _nBodies(0), _dof(0), isRunning(true), g(9.8)
 	note("System created");
 	sysBodies.reserve(4);
 	sysJoints.reserve(5);
-	sysForces.reserve(3);	
+	sysFGs.reserve(3);	
 }
 
 System::~System()
@@ -36,10 +36,11 @@ void System::initialize()
 void System::update()
 {
 	// calculate force from each FG and add it to forces vector
-	for (auto& FG : sysFGs)
-	{
-		sysForces.emplace_back(FG->getForce());
-	}
+	//for (auto& FG : sysFGs)
+	//{
+		
+		//sysForces.emplace_back(FG->getForce());
+	//}
 
 	//_formSystemRhs();
 	//_solveSystemEquation();
@@ -95,7 +96,7 @@ void System::applyGravity(bool flag)
 	if (!flag)
 		return;
 
-	Force gravity(Vect2d(0, -g));
+	Force gravity(Vect2d(0, -g), Point());
 
 	for (Body& b : sysBodies)
 	{
@@ -129,9 +130,16 @@ void System::addJoints(std::initializer_list<Joint> jointsIn)
 	}
 }
 
-void System::addForces(std::vector<ForceGenerator*> FGsIn)
+void System::addForces(std::initializer_list<ForceGenerator> FGsIn)
 {
+	std::vector<ForceGenerator*> temp;
+
 	for (auto& fg : FGsIn)
+	{
+		temp.emplace_back(&fg);
+	}
+
+	for (auto& fg : temp)
 	{
 		Force force = fg->getForce();
 		auto& bod = sysBodies.at(force.appliedPoint.bIndex);

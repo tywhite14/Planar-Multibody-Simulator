@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Point.h"
-#include "Vect2d.h"
+
+class Point;
 
 struct Force
 {
-	Force() : value(Vect2d()), appliedPoint(Point()) { }
-	Force(const Vect2d& val, const Point& p = Point()) : value(val), appliedPoint(p) { }
+	Force();
+	Force(const Vect2d& val);
+	Force(const Vect2d& val, const Point& p);
 
 	Vect2d value;
 	Point appliedPoint;

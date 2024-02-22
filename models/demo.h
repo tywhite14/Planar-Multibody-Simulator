@@ -72,6 +72,6 @@ void System::_loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints)
 	sd1.springConstant = 850;
 	sd1.natLength = 1.0;
 
-	addForces({ sd1});
+	addForces({ sd1, sd1 });
 	applyGravity(true);
 }

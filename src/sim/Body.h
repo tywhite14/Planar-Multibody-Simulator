@@ -3,11 +3,12 @@
 #include <vector>
 
 #include "constants.h"
-#include "Force.h"
 #include "Point.h"
+#include "Vect2d.h"
 
 class Point;
 struct Force;
+class ForceGenerator;
 
 class Body
 {
@@ -45,7 +46,7 @@ public:
 	double phi_dot;
 
 	std::vector<Point> points;
-	std::vector<Force*> appliedForces;
+	std::vector<Force> appliedForces;
 	std::vector<double> appliedMoments;
 	unsigned int sysIndex;
 

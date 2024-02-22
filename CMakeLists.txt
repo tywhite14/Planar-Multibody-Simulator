@@ -9,7 +9,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin/linux/${BUIL
 
 file (GLOB src_files 
 "${PROJECT_SOURCE_DIR}/src/sim/*.cpp"
-"${PROJECT_SOURCE_DIR}/utils/sim/*.cpp"
+"${PROJECT_SOURCE_DIR}/src/utils/*.cpp"
 )
 
 add_executable (PMS ${src_files})

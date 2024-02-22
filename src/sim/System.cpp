@@ -118,7 +118,7 @@ void System::addPoints(std::initializer_list<Point> pointsIn)
 {
 	for (auto& p : pointsIn)
 	{
-		auto bod = sysBodies.at(p.bIndex);
+		auto& bod = sysBodies.at(p.bIndex);
 		bod.points.emplace_back(p);
 	}
 }

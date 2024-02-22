@@ -19,7 +19,7 @@ class ForceGenerator
 public:
 	ForceGenerator();
 
-	virtual Force& getForce() = 0;
+	virtual Force& getForce();
 
 protected:
 	void setForce(const Force& f);

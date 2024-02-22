@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "constants.h"
+#include "ForceGenerator.h"
 #include "Point.h"
 #include "Vect2d.h"
 

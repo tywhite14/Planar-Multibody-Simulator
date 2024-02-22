@@ -2,11 +2,10 @@
 
 #include <vector>
 
-#include "Body.h"
 #include "ForceGenerator.h"
+#include "Body.h"
 #include "Joint.h"
 #include "Matrix.h"
-#include "Point.h"
 
 class System
 {

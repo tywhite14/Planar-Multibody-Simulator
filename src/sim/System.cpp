@@ -1,6 +1,5 @@
 #include "log.h"
 #include "System.h"
-#include "Clock.h"
 
 #pragma warning(disable : 4267)
 
@@ -9,7 +8,9 @@ System::System() : _nBodies(0), _dof(0), isRunning(true), g(9.8)
 	note("System created");
 	sysBodies.reserve(4);
 	sysJoints.reserve(5);
-	sysFGs.reserve(3);	
+	sysFGs.reserve(3);
+
+	initialize();
 }
 
 System::~System()
@@ -134,9 +135,9 @@ void System::addForces(std::initializer_list<ForceGenerator> FGsIn)
 {
 	std::vector<ForceGenerator*> temp;
 
-	for (auto& fg : FGsIn)
+	for (ForceGenerator fg : FGsIn)
 	{
-		temp.emplace_back(&fg);
+		temp.push_back(&fg);
 	}
 
 	for (auto& fg : temp)

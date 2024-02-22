@@ -1,4 +1,5 @@
 #include "log.h"
+#include "Body.h"
 #include "Point.h"
 
 Point::Point() :

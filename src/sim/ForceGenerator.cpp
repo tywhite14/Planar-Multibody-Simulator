@@ -15,3 +15,8 @@ void ForceGenerator::setForce(const Force& f)
 {
 	m_force = f;
 }
+
+Force& ForceGenerator::getForce()
+{
+	return m_force;
+}

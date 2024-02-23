@@ -2,17 +2,35 @@
 #include "log.h"
 
 Joint::Joint() :
-	type(jointType::none),
+	type(joint::type::none),
+	iP(Point()),
+	jP(Point()),
 	iBindex(0),
 	jBindex(0),
-	iPindex(0),
-	jPindex(0),
 	iUindex(0),
 	jUindex(0),
+	numConstraints(0),
 	DconstMat(Matrix()),
 	Jacobian(Matrix()),
 	Rhs(Matrix())
 { 
+	_initialize();
+	debug("Joint created");
+}
+
+Joint::Joint(Point& A, Point& B, joint::type typeIn) :
+	type(typeIn),
+	iP(A),
+	jP(B),
+	iBindex(A.bIndex),
+	jBindex(B.bIndex),
+	iUindex(0),
+	jUindex(0),
+	numConstraints(0),
+	DconstMat(Matrix()),
+	Jacobian(Matrix()),
+	Rhs(Matrix())
+{
 	_initialize();
 	debug("Joint created");
 }
@@ -28,37 +46,51 @@ Joint::Joint(const Joint& j)
 	debug("Joint destroyed");
 }
 
+void Joint::connect(Point& A, Point& B, joint::type typeIn)
+{
+	type = typeIn;
+	iP = A;
+	jP = B;
+	iBindex = A.bIndex;
+	jBindex = B.bIndex;
+
+	_initialize();
+}
+
 void Joint::_initialize()
 {
 	switch (type)
 	{
-	case (rev):
+	case (joint::type::rev):
+		numConstraints = 2;
 		DconstMat = Matrix(0);
 		Jacobian = Matrix(0);
 		Rhs = Matrix(0);
 		break;
 
-	case(tran):
-
+	case(joint::type::tran):
+		numConstraints = 2;
 		DconstMat = Matrix(0);
 		Jacobian = Matrix(0);
 		Rhs = Matrix(0);
 		break;
 
-	case(rigid):
+	case(joint::type::rigid):
+		numConstraints = 3;
 		DconstMat = Matrix(0);
 		Jacobian = Matrix(0);
 		Rhs = Matrix(0);
 		break;
 
-	case(rel_rot):
-		warn("rel_rot not fully developed yet. Results are incorrect");
+	case(joint::type::rel_rot):
+		numConstraints = 0;
+		error("rel_rot not fully developed yet. Results are incorrect");
 		DconstMat = Matrix(0);
 		Jacobian = Matrix(0);
 		Rhs = Matrix(0);
 		break;
 
-	case(none):
+	case(joint::type::none):
 	default:
 		error("Undefined joint type");
 	}

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "ForceGenerator.h"
+#include "Force.h"
 #include "Body.h"
 #include "Joint.h"
 #include "Matrix.h"
@@ -26,13 +26,13 @@ public:
 	void addBodies(std::initializer_list<Body>  bodiesIn);
 	void addPoints(std::initializer_list<Point> pointsIn);
 	void addJoints(std::initializer_list<Joint> jointsIn);
-	void addForces(std::initializer_list<ForceGenerator> FGsIn);
+	void addForces(std::initializer_list<Force> forcesIn);
 
-	Body gnd;
 	std::vector<Body>  sysBodies;
 	std::vector<Joint> sysJoints;
-	std::vector<ForceGenerator*> sysFGs;
+	std::vector<Force> sysForces;
 
+	Body gnd;
 	double kineticEnergy;
 	double potentialEnergy;
 	double totalEnergy;
@@ -63,6 +63,6 @@ private:
 	void _calcKineticEnergy();
 	void _calcPotentialEnergy();
 	void _calcTotalEnergy();
-	void _loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 	void _formMassMatrices();
+	void loadModel(std::vector<Body>& bodies, std::vector<Joint>& joints);
 };

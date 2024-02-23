@@ -6,7 +6,8 @@ Point::Point() :
 	rP(0),
 	rP_dot(0),
 	rP_ddot(0),
-	sP_local(0)
+	sP_local(0),
+	bIndex(0)
 {
 	debug("Point created");
 }
@@ -17,7 +18,7 @@ Point::Point(Body b, Vect2d sPlocal) :
 	rP_ddot(0),
 	sP_local(sPlocal),
 	bIndex(b.sysIndex)
-{ 
+{
 	debug("Point created");
 }
 
@@ -30,9 +31,4 @@ Point::Point(const Point& p)
 {
 	*this = p;
 	debug("Point destroyed");
-}
-
-void Point::onBody(Body& body)
-{
-	body.points.emplace_back(*this);
 }

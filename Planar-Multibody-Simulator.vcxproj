@@ -85,8 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\sim\ForceGenerator.cpp" />
-    <ClCompile Include="src\sim\SpringDamper.cpp" />
+    <ClCompile Include="src\sim\Force.cpp" />
     <ClCompile Include="src\sim\Point.cpp" />
     <ClCompile Include="src\sim\Body.cpp" />
     <ClCompile Include="src\utils\Clock.cpp" />
@@ -98,9 +97,8 @@
     <ClCompile Include="src\utils\Vect2d.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\sim\ForceGenerator.h" />
+    <ClInclude Include="src\sim\Force.h" />
     <ClInclude Include="models\demo.h" />
-    <ClInclude Include="src\sim\SpringDamper.h" />
     <ClInclude Include="src\sim\Body.h" />
     <ClInclude Include="src\utils\Clock.h" />
     <ClInclude Include="src\sim\constants.h" />

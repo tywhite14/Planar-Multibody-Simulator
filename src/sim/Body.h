@@ -3,13 +3,11 @@
 #include <vector>
 
 #include "constants.h"
-#include "ForceGenerator.h"
 #include "Point.h"
 #include "Vect2d.h"
 
-class Point;
+struct Point;
 struct Force;
-class ForceGenerator;
 
 class Body
 {
@@ -26,8 +24,10 @@ public:
 	);
 
 	Body(const Body& b);
-
 	~Body();
+
+	void initialize();
+	void update();
 
 	inline float getAnimHeight() const;
 	inline float getAnimWidth() const;
@@ -45,10 +45,10 @@ public:
 	Vect2d r_dot;
 	double phi;
 	double phi_dot;
+	Vect2d netAppliedForce;
+	Vect2d netAppliedTorque;
 
 	std::vector<Point> points;
-	std::vector<Force> appliedForces;
-	std::vector<double> appliedMoments;
 	unsigned int sysIndex;
 
 	// animation
@@ -60,6 +60,4 @@ public:
 private:
 	Vect2d r_ddot;
 	double phi_ddot;
-	Vect2d netForce;
-	Vect2d netTorque;
 };

@@ -8,7 +8,12 @@ System::System() : _nBodies(0), _dof(0), isRunning(true), g(9.8)
 	note("System created");
 	sysBodies.reserve(4);
 	sysJoints.reserve(5);
-	sysFGs.reserve(3);
+	sysForces.reserve(3);
+
+	sysBodies.emplace_back(gnd);
+
+	loadModel(sysBodies, sysJoints);
+	debug("Model loaded");
 
 	initialize();
 }
@@ -21,11 +26,14 @@ System::~System()
 
 void System::initialize()
 {
-	sysBodies.emplace_back(gnd);
+	// Now that bodies have been loaded,
+	// assign bIndex to each body's CoM point
+	for (auto& b : sysBodies)
+	{
+		b.points.at(0).bIndex = b.sysIndex;
+	}
 
-	_loadModel(sysBodies, sysJoints);
-	debug("Model loaded");
-
+	// don't count gnd as a body
 	_nBodies = sysBodies.size() - 1;
 	setDof();
 
@@ -36,6 +44,10 @@ void System::initialize()
 
 void System::update()
 {
+	// _updateBodies();
+	// _updateJoints();
+	// _updateForces();
+	
 	// calculate force from each FG and add it to forces vector
 	//for (auto& FG : sysFGs)
 	//{
@@ -73,16 +85,16 @@ void System::setDof()
 	{
 		switch (joint.type)
 		{
-		case (rev):
+			case (joint::rev):
 			_dof -= 2;
 			break;
-		case(tran):
+		case(joint::tran):
 			_dof -= 2;
 			break;
-		case(rigid):
+		case(joint::rigid):
 			_dof -= 3;
 			break;
-		case(rel_rot):
+		case(joint::rel_rot):
 			warn("rel_rot not fully developed yet. Results are incorrect");
 			_dof -= 2;
 			break;
@@ -97,16 +109,20 @@ void System::applyGravity(bool flag)
 	if (!flag)
 		return;
 
-	Force gravity(Vect2d(0, -g), Point());
+	Vect2d gVec(0, -g);
+	Force gravity(gVec);
+	gravity.type = constant;
 
 	for (Body& b : sysBodies)
 	{
-		b.appliedForces.emplace_back(gravity);
+		gravity.iP = b.points.at(0);
+		sysForces.emplace_back(gravity);
 	}
 }
 
 void System::addBodies(std::initializer_list<Body> bodiesIn)
 {
+
 	for (Body b : bodiesIn)
 	{
 		b.sysIndex = sysBodies.size();
@@ -131,20 +147,26 @@ void System::addJoints(std::initializer_list<Joint> jointsIn)
 	}
 }
 
-void System::addForces(std::initializer_list<ForceGenerator> FGsIn)
+void System::addForces(std::initializer_list<Force> forcesIn)
 {
-	std::vector<ForceGenerator*> temp;
-
-	for (ForceGenerator fg : FGsIn)
+	for (auto& f : forcesIn)
 	{
-		temp.push_back(&fg);
-	}
+		switch (f.type) {
+		case (ptp):
+			break;
 
-	for (auto& fg : temp)
-	{
-		Force force = fg->getForce();
-		auto& bod = sysBodies.at(force.appliedPoint.bIndex);
-		bod.appliedForces.emplace_back(force);
+		case (constant):
+			break;
+
+		case (rot):
+
+		case (func):
+
+		case (none):
+
+		default:
+			error("force type not implemented yet");
+		}
 	}
 }
 

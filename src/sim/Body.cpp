@@ -8,17 +8,17 @@ Body::Body() :
 	r_dot(0.0),
 	phi(0.0),
 	phi_dot(0.0),
+	netAppliedForce(0.0),
+	netAppliedTorque(0.0),
 	shape(anim::shape::none),
 	animHeight(0.f),
 	animWidth(0.f),
 	animRadius(0.f),
 	r_ddot(0.0),
 	phi_ddot(0.0),
-	netForce(0.0),
-	netTorque(0.0)
+	sysIndex(0)
 {
-	points.reserve(2);
-	debug("Body created");
+	initialize();
 }
 
 Body::Body(
@@ -36,19 +36,17 @@ Body::Body(
 	r_dot(r_dotIn),
 	phi(phiIn),
 	phi_dot(phi_dotIn),
+	netAppliedForce(0.0),
+	netAppliedTorque(0.0),
 	shape(shapeIn),
 	animHeight(0.f),
 	animWidth(0.f),
 	animRadius(0.f),
 	r_ddot(0.0),
 	phi_ddot(0.0),
-	netForce(0.0),
-	netTorque(0.0)
+	sysIndex(0)
 {
-	points.reserve(2);
-	appliedForces.reserve(2);
-	appliedMoments.reserve(2);
-	debug("Body created");
+	initialize();
 }
 
 Body::Body(const Body& b)
@@ -60,6 +58,25 @@ Body::Body(const Body& b)
 Body::~Body()
 {
 	debug("Body destroyed");
+}
+
+void Body::initialize()
+{
+	points.reserve(3);
+
+	Point CoM;
+	CoM.rP = this->r;
+	CoM.rP_dot = this->r_dot;
+	CoM.rP_ddot = this->r_ddot;
+	CoM.sP_local = Vect2d(0);
+	points.push_back(CoM);
+
+	debug("Body created");
+}
+
+void Body::update()
+{
+	// write the update for each attribute!
 }
 
 inline float Body::getAnimHeight() const { return animHeight; }

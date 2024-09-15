@@ -1,18 +1,14 @@
-#include <cassert>
-#include "log.h"
-#include "Matrix.h"
-#include "Sim.h"
-#include "Clock.h"
 #include "../models/demo.h"
+#include "app/Application.h"
+#include "log.h"
 
 int main()
-{
-	using namespace std;
-	
-	Sim sim;
-	sim.update();
+{	
+	Application* app = new Application;
 
-	log("Size of Sim: " << sizeof(sim));
+	while(app->isRunning())
+		app->run();
 
+	delete app;
 	return 0;
 }

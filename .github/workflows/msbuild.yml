@@ -2,35 +2,49 @@
 # Build MSVC Project
 # Run with Valgrind
 
-name: MSBuild
+name: Cross-Platform Build
 
 on:
-    workflow_dispatch:
-
-
-env:
-  SOLUTION_FILE_PATH: .
-
- BUILD_CONFIGURATION: Debug
-
-permissions:
-  contents: read
+  push:
+    branches:
+      - main
+      - dev
 
 jobs:
-  build:
-    runs-on: windows-latest
+  build-lin:
+    name: Build Linux
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y valgrind cmake
+
+    - name: Build project
+      run: cmake . && make
+
+    - name: Run Valgrind
+      run: valgrind --leak-check=full --show-leak-kinds=all --undef-value-errors=yes --track-origins=yes bin/linux/Debug/PMS
+  
+  build-win:
+    name: Build Windows
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        BUILD_CONFIGURATION: [Release, Debug]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restore NuGet packages
+    - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
-
-    - name: Build project
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Configuration=${{matrix.BUILD_CONFIGURATION}} .

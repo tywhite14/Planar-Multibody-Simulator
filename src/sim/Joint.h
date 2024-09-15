@@ -1,44 +1,37 @@
 #pragma once
 
 #include "Matrix.h"
-#include "Point.h"
-
-namespace joint
-{
-	enum type
-	{
-		none = 0,
-		rev,
-		tran,
-		rel_rot,
-		rel_tran,
-		roll,
-		rigid
-	};
-}
 
 class Joint
 {
 public:
-	joint::type type;		// see constants.h for types
-	Point iP;				// point Pi
-	Point jP;				// point Pj
-	unsigned int iBindex;	// body index i
-	unsigned int jBindex;	// body index j
-	unsigned int iUindex;	// unit vector u_i index
-	unsigned int jUindex;	// unit vector u_j index
-	unsigned int numConstraints;
-	Matrix DconstMat;		// (Eq. 7.1)
-	Matrix Jacobian;		// (Eq. 7.4)
-	Matrix Rhs;				// (Eq. 7.7)
+	enum Type
+	{
+		none = 0,
+		rev,
+		tran,
+		roll,
+		rigid
+	};
 
 	Joint();
-	Joint(Point& A, Point& B, joint::type typeIn);
-	~Joint();
 	Joint(const Joint& j);
+	~Joint();
 
-	void connect(Point& A, Point& B, joint::type typeIn);
+	Type  m_type;
+	unsigned int m_iPidx;	// point Pi
+	unsigned int m_jPidx;	// point Pj
+	unsigned int m_iBidx;	// body index i
+	unsigned int m_jBidx;	// body index j
+	unsigned int m_iUidx;	// unit vector u_i index
+	unsigned int m_jUidx;	// unit vector u_j index
+	unsigned int m_nConsts; // number of constraints
+	unsigned int m_nBodies; // number of bodies involved
+	Matrix<2, 3> Di;		// Body i jacobian
+	Matrix<2, 3> Dj;		// Body j jacobian
+	Matrix<2, 3> Di_dot;	// Body i jac_dot
+	Matrix<2, 3> Dj_dot;	// Body j jac_dot
 
 private:
-	void _initialize();
+	void initialize();
 };

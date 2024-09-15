@@ -1,22 +1,18 @@
 #include "ForceGenerator.h"
 #include "log.h"
 
-Force::Force() : value(Vect2d()), appliedPoint(Point()) { }
-Force::Force(const Vect2d& val) : value(val), appliedPoint(Point()) { }
-Force::Force(const Vect2d& val, const Point& p) : value(val), appliedPoint(p) { }
-
-
-ForceGenerator::ForceGenerator() : m_force(Force())
+ForceGenerator::ForceGenerator() : m_pIdx(0), m_bIdx(0), value({ 0 })
 {
 	debug("ForceGenerator created");
 }
 
-void ForceGenerator::setForce(const Force& f)
+ForceGenerator::ForceGenerator(const ForceGenerator& fg)
 {
-	m_force = f;
+	*this = fg;
+	debug("ForceGenerator copied");
 }
 
-Force& ForceGenerator::getForce()
+ForceGenerator::~ForceGenerator()
 {
-	return m_force;
+	debug("ForceGenerator destroyed");
 }

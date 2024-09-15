@@ -1,19 +1,13 @@
-#include <cassert>
-
-#include "utils/log.h"
-#include "utils/Matrix.h"
-#include "sim/System.h"
-#include "utils/Clock.h"
 #include "../models/demo.h"
+#include "app/Application.h"
+#include "log.h"
 
 int main()
-{
-	using namespace std;
-	
-	System* sim = new System;
+{	
+	Application* app = new Application;
 
-	while(sim->isRunning)
-		sim->update();
+	while(app->isRunning())
+		app->run();
 
 	return 0;
 }

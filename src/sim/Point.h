@@ -1,19 +1,16 @@
 #pragma once
 
-#include "Vect2d.h"
-
-class Body;
+#include "Matrix.h"
 
 struct Point
 {
 	Point();
-	Point(Body b, Vect2d sPlocal);
 	Point(const Point& p);
 	~Point();
 
-	unsigned int bIndex;	// index of body in sysBodies with this point
-	Vect2d rP;				// global coordinate
-	Vect2d rP_dot;			// global velocity
-	Vect2d rP_ddot;			// global acceleration
-	Vect2d sP_local;		// local coordinate
+	unsigned int bIdx;	// index of body in sysBodies with this point
+	Vec2d sP_local;		// relative coordinate in local frame
+	Vec2d sP;			// relative coordinate in global frame
+	Vec2d sP_dot;		// relative velocity in global frame
+	Vec2d sP_ddot;		// relative acceleration in global frame
 };

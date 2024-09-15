@@ -2,42 +2,18 @@
 #include "log.h"
 
 Joint::Joint() :
-	type(joint::type::none),
-	iP(Point()),
-	jP(Point()),
-	iBindex(0),
-	jBindex(0),
-	iUindex(0),
-	jUindex(0),
-	numConstraints(0),
-	DconstMat(Matrix()),
-	Jacobian(Matrix()),
-	Rhs(Matrix())
+	m_type(Type::none),
+	m_iPidx(0),
+	m_jPidx(0),
+	m_iBidx(0),
+	m_jBidx(0),
+	m_iUidx(0),
+	m_jUidx(0),
+	m_nConsts(0),
+	m_nBodies(0)
 { 
-	_initialize();
+	initialize();
 	debug("Joint created");
-}
-
-Joint::Joint(Point& A, Point& B, joint::type typeIn) :
-	type(typeIn),
-	iP(A),
-	jP(B),
-	iBindex(A.bIndex),
-	jBindex(B.bIndex),
-	iUindex(0),
-	jUindex(0),
-	numConstraints(0),
-	DconstMat(Matrix()),
-	Jacobian(Matrix()),
-	Rhs(Matrix())
-{
-	_initialize();
-	debug("Joint created");
-}
-
-Joint::~Joint()
-{
-	debug("Joint copied");
 }
 
 Joint::Joint(const Joint& j)
@@ -46,52 +22,32 @@ Joint::Joint(const Joint& j)
 	debug("Joint destroyed");
 }
 
-void Joint::connect(Point& A, Point& B, joint::type typeIn)
+Joint::~Joint()
 {
-	type = typeIn;
-	iP = A;
-	jP = B;
-	iBindex = A.bIndex;
-	jBindex = B.bIndex;
-
-	_initialize();
+	debug("Joint copied");
 }
 
-void Joint::_initialize()
+void Joint::initialize()
 {
-	switch (type)
+	switch (m_type)
 	{
-	case (joint::type::rev):
-		numConstraints = 2;
-		DconstMat = Matrix(0);
-		Jacobian = Matrix(0);
-		Rhs = Matrix(0);
+	case (Type::rev):
+		m_nConsts = 2;
+		m_nBodies = 2;
 		break;
 
-	case(joint::type::tran):
-		numConstraints = 2;
-		DconstMat = Matrix(0);
-		Jacobian = Matrix(0);
-		Rhs = Matrix(0);
+	case(Type::tran):
+		m_nConsts = 2;
+		m_nBodies = 2;
 		break;
 
-	case(joint::type::rigid):
-		numConstraints = 3;
-		DconstMat = Matrix(0);
-		Jacobian = Matrix(0);
-		Rhs = Matrix(0);
+	case(Type::rigid):
+		m_nConsts = 3;
+		m_nBodies = 2;
 		break;
 
-	case(joint::type::rel_rot):
-		numConstraints = 0;
-		error("rel_rot not fully developed yet. Results are incorrect");
-		DconstMat = Matrix(0);
-		Jacobian = Matrix(0);
-		Rhs = Matrix(0);
-		break;
-
-	case(joint::type::none):
+	case(Type::none):
 	default:
-		error("Undefined joint type");
+		Error("Undefined joint type");
 	}
 }

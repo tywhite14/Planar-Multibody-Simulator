@@ -1,34 +1,23 @@
-#include "log.h"
-#include "Body.h"
 #include "Point.h"
+#include "log.h"
 
 Point::Point() :
-	rP(0),
-	rP_dot(0),
-	rP_ddot(0),
+	bIdx(0),
 	sP_local(0),
-	bIndex(0)
+	sP(0),
+	sP_dot(0),
+	sP_ddot(0)
 {
 	debug("Point created");
-}
-
-Point::Point(Body b, Vect2d sPlocal) :
-	rP(0),
-	rP_dot(0),
-	rP_ddot(0),
-	sP_local(sPlocal),
-	bIndex(b.sysIndex)
-{
-	debug("Point created");
-}
-
-Point::~Point()
-{
-	debug("Point copied");
 }
 
 Point::Point(const Point& p)
 {
 	*this = p;
+	debug("Point copied");
+}
+
+Point::~Point()
+{
 	debug("Point destroyed");
 }

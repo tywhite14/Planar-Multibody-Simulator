@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include <math.h>
 
 Matrix::Matrix() : m_count(0), m_rows(0), m_cols(0), m_data(nullptr) { }
 
@@ -352,7 +353,7 @@ Matrix Matrix::operator*(const double s) const
 Matrix Matrix::operator/(const double s) const
 {
 	// leave this check in. It could happen at any point.
-	if (std::fabs(s) < c::EPS) {
+	if (fabs(s) < c::EPS) {
 		FATAL("Cannot divide matrix by zero.", 7);
 	}
 

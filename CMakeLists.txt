@@ -14,8 +14,8 @@ file (GLOB src_files
 	"${PROJECT_SOURCE_DIR}/src/utils/*.cpp"
 )
 
-include_directories("${PROJECT_SOURCE_DIR}/src/app")
-include_directories("${PROJECT_SOURCE_DIR}/src/sim")
-include_directories("${PROJECT_SOURCE_DIR}/src/utils")
+include_directories ("${PROJECT_SOURCE_DIR}/src/app")
+include_directories ("${PROJECT_SOURCE_DIR}/src/sim")
+include_directories ("${PROJECT_SOURCE_DIR}/src/utils")
 
 add_executable (${PROJECT_NAME} ${src_files})

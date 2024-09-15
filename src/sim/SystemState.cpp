@@ -5,12 +5,12 @@ SystemState::SystemState() :
 	m_nBodies(0), 
 	m_dof(0)
 {
-	debug("SystemState created");
+	Debug("SystemState created");
 }
 
 SystemState::~SystemState()
 {
-	debug("SystemState destroyed");
+	Debug("SystemState destroyed");
 }
 
 void SystemState::initialize()

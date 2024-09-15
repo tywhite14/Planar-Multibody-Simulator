@@ -23,14 +23,14 @@ public:
 	double potentialEnergy;
 	double mechEnergy;
 
-	Matrix<3, 1> q;			// system state vector (px, py, phi)
-	Matrix<3, 1> q_dot;		// 1st time derivative of system state
-	Matrix<3, 1> q_ddot;	// 2nd time derivative of system state
-	Matrix<3, 1> J;			// system Jacobian
-	Matrix<3, 1> J_dot;		// 1st time derivative of system Jacobian
-	Matrix<3, 1> W;			// inverse of system mass matrix
-	Matrix<3, 1> h_a;		// array of net system applied forces
-	Matrix<3, 1> h_r;		// array of net system reaction forces
+	Matrix q;		// system state vector (px, py, phi)
+	Matrix q_dot;	// 1st time derivative of system state
+	Matrix q_ddot;	// 2nd time derivative of system state
+	Matrix J;		// system Jacobian
+	Matrix J_dot;	// 1st time derivative of system Jacobian
+	Matrix W;		// inverse of system mass matrix
+	Matrix h_a;		// array of net system applied forces
+	Matrix h_r;		// array of net system reaction forces
 
 private:
 	unsigned int m_nBodies;	// number of bodies in the system

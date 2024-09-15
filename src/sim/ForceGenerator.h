@@ -11,7 +11,7 @@ public:
 
 	unsigned int m_pIdx;
 	unsigned int m_bIdx;
-	Vec3d value;
+	Matrix value;
 
 private:
 };

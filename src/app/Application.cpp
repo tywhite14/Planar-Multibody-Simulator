@@ -4,12 +4,12 @@
 Application::Application(double rate, double fps) :
 	m_rate(rate), m_fps(fps), m_isRunning(true)
 {
-	debug("Application created");
+	Debug("Application created");
 }
 
 Application::~Application()
 {
-	debug("Application destroyed");
+	Debug("Application destroyed");
 }
 
 void Application::run()

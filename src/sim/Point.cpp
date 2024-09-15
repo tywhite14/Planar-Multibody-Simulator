@@ -3,21 +3,21 @@
 
 Point::Point() :
 	bIdx(0),
-	sP_local(0),
-	sP(0),
-	sP_dot(0),
-	sP_ddot(0)
+	sP_local(2, 1),
+	sP(2, 1),
+	sP_dot(2, 1),
+	sP_ddot(2, 1)
 {
-	debug("Point created");
+	Debug("Point created");
 }
 
 Point::Point(const Point& p)
 {
 	*this = p;
-	debug("Point copied");
+	Debug("Point copied");
 }
 
 Point::~Point()
 {
-	debug("Point destroyed");
+	Debug("Point destroyed");
 }

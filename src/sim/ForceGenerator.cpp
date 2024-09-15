@@ -3,16 +3,16 @@
 
 ForceGenerator::ForceGenerator() : m_pIdx(0), m_bIdx(0), value({ 0 })
 {
-	debug("ForceGenerator created");
+	Debug("ForceGenerator created");
 }
 
 ForceGenerator::ForceGenerator(const ForceGenerator& fg)
 {
 	*this = fg;
-	debug("ForceGenerator copied");
+	Debug("ForceGenerator copied");
 }
 
 ForceGenerator::~ForceGenerator()
 {
-	debug("ForceGenerator destroyed");
+	Debug("ForceGenerator destroyed");
 }

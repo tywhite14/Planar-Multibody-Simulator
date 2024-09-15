@@ -16,7 +16,7 @@ extern SystemClock sysClock;
 
 std::string filenameFromPath(std::string strIn);
 
-namespace print
+namespace LOG
 {
 	constexpr auto RESET   = "\x1b[0m";
 	constexpr auto BLACK   = "\x1b[30m";
@@ -28,7 +28,7 @@ namespace print
 	constexpr auto CYAN    = "\x1b[36m";
 	constexpr auto WHITE   = "\x1b[37m";
 
-	static std::ostringstream printStream;
+	static std::ostringstream logStream;
 }
 	#define TIMESTAMP \
 				"[" << \
@@ -38,16 +38,16 @@ namespace print
 				sysClock.getSecondsDecimal() << \
 				std::defaultfloat << "] "
 
-	//#define printFILE
-	#ifdef  printFILE
-		static std::ofstream printFile("print.txt");
+	//#define LOGFILE
+	#ifdef  LOGFILE
+		static std::ofstream logFile("log.txt");
 		#define print(x) {\
-			print::printStream.str("");\
-			print::printStream.clear();\
-			print::printStream << TIMESTAMP << x << "\n";\
-			std::string printString = print::printStream.str();\
-			std::cout << printString;\
-			printFile << printString;
+			LOG::logStream.str("");\
+			LOG::logStream.clear();\
+			LOG::logStream << TIMESTAMP << x << "\n";\
+			std::string logString = LOG::logStream.str();\
+			std::cout << logString;\
+			logFile << logString;\
 		}
 
 	#else
@@ -56,16 +56,16 @@ namespace print
 
 	#define EXIT_ON_FATAL
 
-	#define debug(x)	print(print::GREEN << "Debug: " << print::RESET << x)
-	#define Warn(x)		print(filenameFromPath(__FILE__) << ": " << __LINE__ << ": " << print::YELLOW << "Warning: " << print::RESET << x)
-	#define Error(x)	print(filenameFromPath(__FILE__) << ": " << __LINE__ << ": " << print::RED    << "Error: "   << print::RESET << x)
+	#define Debug(x)	print(LOG::GREEN  << "Debug: "   << LOG::RESET << x)
+	#define Warn(x)		print(LOG::YELLOW << "Warning: " << LOG::RESET << filenameFromPath(__FILE__) << ": " << __LINE__ << ": " << x)
+	#define Error(x)	print(LOG::RED    << "Error: "   << LOG::RESET << filenameFromPath(__FILE__) << ": " << __LINE__ << ": " << x)
 	#ifdef EXIT_ON_FATAL
-	#define FATAL(x, n) Error(x) ;exit(n)
+		#define FATAL(x, n) Error(x); exit(n)
 	#else 
 		#define FATAL(x, n) Error(x)
 	#endif
 #else
-	#define debug(x)
+	#define Debug(x)
 	#define print(x) std::cout << x << "\n"
 	#define Warn(x)
 	#define Error(x) std::cout << x << "\n"

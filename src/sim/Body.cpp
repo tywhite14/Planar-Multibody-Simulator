@@ -19,12 +19,12 @@ Body::Body() :
 Body::Body(const Body& b)
 {
 	*this = b;
-	debug("Body copied");
+	Debug("Body copied");
 }
 
 Body::~Body()
 {
-	debug("Body destroyed");
+	Debug("Body destroyed");
 }
 
 void Body::initialize()

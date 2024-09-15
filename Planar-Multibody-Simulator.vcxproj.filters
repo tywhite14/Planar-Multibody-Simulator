@@ -39,6 +39,9 @@
     <ClCompile Include="src\sim\ForceGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="models\demo.h">
@@ -74,10 +77,10 @@
     <ClInclude Include="src\app\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\Matrix.h">
+    <ClInclude Include="src\sim\ForceGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\sim\ForceGenerator.h">
+    <ClInclude Include="src\utils\Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

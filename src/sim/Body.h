@@ -21,10 +21,10 @@ public:
 	double mechEnergy;
 
 	// state
-	Vec3d q;
-	Vec3d q_dot;
-	Vec3d q_ddot;
-	Vec3d netAppliedForces;
+	Matrix q;
+	Matrix q_dot;
+	Matrix q_ddot;
+	Matrix netAppliedForces;
 
 	std::vector<unsigned int> pointIndices;
 

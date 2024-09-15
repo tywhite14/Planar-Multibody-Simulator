@@ -9,5 +9,6 @@ int main()
 	while(app->isRunning())
 		app->run();
 
+	delete app;
 	return 0;
 }

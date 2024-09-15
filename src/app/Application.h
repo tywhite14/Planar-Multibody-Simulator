@@ -3,6 +3,7 @@
 #include "Body.h"
 #include "Joint.h"
 #include "Point.h"
+#include "SystemState.h"
 #include "ForceGenerator.h"
 
 #include <vector>
@@ -27,6 +28,7 @@ private:
 	std::vector<Body>  sysBodies;
 	std::vector<Joint> sysJoints;
 	std::vector<ForceGenerator> sysForces;
+	SystemState m_systemState;
 
 	double m_rate;
 	double m_fps;

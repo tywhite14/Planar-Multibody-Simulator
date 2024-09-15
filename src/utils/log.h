@@ -72,7 +72,7 @@ namespace LOG
 	#define FATAL(x, n) Error(x)
 #endif
 
-std::string filenameFromPath(std::string strIn)
+static std::string filenameFromPath(std::string strIn)
 {
 	size_t found = strIn.find_last_of("/\\");
 	if (found != std::string::npos) {

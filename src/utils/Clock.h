@@ -8,9 +8,17 @@ public:
 	Clock();
 
 	void restart();
-	double getElapsedTime();
+	double getSecondsDecimal() const;
+	long long getSeconds() const;
+	long long getMillis() const;
+	long long getMicros() const;
+	long long getNanos() const;
 
-private:
-	std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-	std::chrono::duration<double> duration;
+protected:
+	std::chrono::time_point<std::chrono::high_resolution_clock> _start;
+};
+
+class SystemClock : public Clock
+{
+	void restart();
 };

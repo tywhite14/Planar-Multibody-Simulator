@@ -18,6 +18,7 @@ The only external library will be SFML for graphics rendering. Math and physics 
 - implement some sort of real-time plotting functionality (e.g., plot lateral force on a body over time)
 - data logging function (maybe support exporting directly to .mat format for MATLAB post-processing)
 - optimization
+- unit tests
 - debugging tools (profiler)
 
 Currently, it does none of these things!

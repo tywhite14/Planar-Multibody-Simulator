@@ -4,7 +4,7 @@ Make rigid-bodies go *brrrrrrrr*
 
 Very much a work in progress.
 The vision is to have an application that simulates 2D rigid-body physics using real-time constraint solving and numerical integration.
-The user will be able to set up a scenario by specifying the physical properties of various bodies (mass, length, size, etc) and the joints between the links (revolute joint, translational joint, rigid joint).
+The user will be able to set up a scenario by specifying the physical properties of various bodies (mass, length, size, etc) and the joints between the bodies (revolute joint, translational joint, rigid joint).
 
 The only external library will be SFML for graphics rendering. Math and physics will all be handled in-house.
 

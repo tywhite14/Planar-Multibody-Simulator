@@ -8,6 +8,17 @@ The user will be able to set up a scenario by specifying the physical properties
 
 The only external library will be SFML for graphics rendering. Math and physics will all be handled in-house.
 
+## Workflow
+Currently, I do all development on the `dev` branch and once it reaches a stable milestone of progress, I then merge `dev` into `main`.
+
+## Build Instructions
+
+### Windows
+Use Visual Studio 2019 or newer. Open the .sln file. Build for Release or Debug.
+
+### Linux
+Navigate to the top-level of the project directory. run the bash script `scripts/buildPMS.sh`
+
 ## Roadmap
 - make it work for one specific scenario
 - set up GUI application so the user can see the simulation

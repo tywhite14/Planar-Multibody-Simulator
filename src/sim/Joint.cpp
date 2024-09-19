@@ -12,23 +12,6 @@ Joint::Joint() :
 	m_nConsts(0),
 	m_nBodies(0)
 { 
-	initialize();
-	Debug("Joint created");
-}
-
-Joint::Joint(const Joint& j)
-{
-	*this = j;
-	Debug("Joint destroyed");
-}
-
-Joint::~Joint()
-{
-	Debug("Joint copied");
-}
-
-void Joint::initialize()
-{
 	switch (m_type)
 	{
 	case (Type::rev):
@@ -49,4 +32,17 @@ void Joint::initialize()
 	case(Type::none):
 		Error("Undefined joint type");
 	}
+
+	Debug("Joint created");
+}
+
+Joint::Joint(const Joint& j)
+{
+	*this = j;
+	Debug("Joint destroyed");
+}
+
+Joint::~Joint()
+{
+	Debug("Joint copied");
 }

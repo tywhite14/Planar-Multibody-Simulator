@@ -17,7 +17,6 @@ public:
 	void reset();
 
 	inline int getDof() const { return m_dof; };
-	void setDof();
 
 	double kineticEnergy;
 	double potentialEnergy;
@@ -41,5 +40,4 @@ private:
 	double m_mechEnergy;	// total system mechanical energy
 
 	void calcSystemEnergy();
-	void formMassMatrices();
 };

@@ -2,8 +2,9 @@
 
 #include "Matrix.h"
 
-struct Point
+class Point
 {
+public:
 	Point();
 	Point(const Point& p);
 	~Point();
@@ -13,4 +14,6 @@ struct Point
 	Matrix sP;			// relative coordinate in global frame
 	Matrix sP_dot;		// relative velocity in global frame
 	Matrix sP_ddot;		// relative acceleration in global frame
+
+private:
 };

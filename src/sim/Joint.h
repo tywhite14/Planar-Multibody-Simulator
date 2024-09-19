@@ -33,5 +33,4 @@ public:
 	Matrix Dj_dot;			// Body j jac_dot
 
 private:
-	void initialize();
 };

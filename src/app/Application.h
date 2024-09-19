@@ -25,12 +25,20 @@ public:
 	inline bool isRunning() const { return m_isRunning; }
 
 private:
-	std::vector<Body>  sysBodies;
-	std::vector<Joint> sysJoints;
-	std::vector<ForceGenerator> sysForces;
+	void update();
+	void render();
+
+	std::vector<Body>  m_bodies;
+	std::vector<Joint> m_joints;
+	std::vector<ForceGenerator> m_forces;
 	SystemState m_systemState;
 
-	double m_rate;
-	double m_fps;
+	const double m_rate;	// Hz, update rate system physics
+	const double m_1_rate;  // sec, inverse of rate
+	const double m_fps;		// Hz, update rate of rendering
+	const double m_1_fps;	// sec, inverse of render rate
+	const double m_timeEnd; // sec, temporary variable, time to end sim
+	double m_frameTime;		// sec, time between the last frame
 	bool m_isRunning;
+	SystemClock m_simClock;
 };

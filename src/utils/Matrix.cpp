@@ -29,19 +29,14 @@ Matrix::~Matrix()
 	deallocate();
 }
 
-Matrix Matrix::Vec2d(double x, double y) {
-	Matrix vec(2, 1);
-	vec(0, 0) = x;
-	vec(1, 0) = y;
-	return vec;
-}
-
-Matrix Matrix::Vec3d(double x, double y, double z) {
-	Matrix vec(3, 1);
-	vec(0, 0) = x;
-	vec(1, 0) = y;
-	vec(2, 0) = z;
-	return vec;
+double Matrix::magnitude() const
+{
+	// TODO: more clever way of doing this
+	double mag = 0;
+	for (int i = 0; i < m_cols; i++) {
+		mag += m_data[i] * m_data[i];
+	}
+	return std::sqrt(mag);
 }
 
 double Matrix::det() const

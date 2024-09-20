@@ -20,12 +20,10 @@ public:
 	Matrix(const Matrix& b);
 	~Matrix();
 
-	static Matrix Vec2d(double x, double y);
-	static Matrix Vec3d(double x, double y, double z);
-
 	inline int	rows()  const { return m_rows; }
 	inline int	cols()  const { return m_cols; }
 	inline int	count() const { return m_count; }
+	double		magnitude() const;
 	double		det() const;
 	Matrix		resize(int rows, int cols) const;
 	Matrix		inverse() const;

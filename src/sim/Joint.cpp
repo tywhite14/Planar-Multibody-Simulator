@@ -3,12 +3,6 @@
 
 Joint::Joint() :
 	m_type(Type::none),
-	m_iPidx(0),
-	m_jPidx(0),
-	m_iBidx(0),
-	m_jBidx(0),
-	m_iUidx(0),
-	m_jUidx(0),
 	m_nConsts(0),
 	m_nBodies(0)
 { 
@@ -31,6 +25,10 @@ Joint::Joint() :
 
 	case(Type::none):
 		Error("Undefined joint type");
+	}
+
+	for (int i = 0; i < m_nConsts; i++) {
+		m_constraints.push_back({});
 	}
 
 	Debug("Joint created");

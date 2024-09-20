@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
-
 #include "Matrix.h"
+
+#include <vector>
 
 class Body
 {
@@ -14,16 +14,23 @@ public:
 	void initialize();
 	void update();
 
+	double calcKineticEnergy() const;
+
 	// physical properties
 	double mass;
 	double Moi;
 	double length;
-	double mechEnergy;
 
+	// TODO: Just make a damn Vec2d/Vec3d class
 	// state
-	Matrix q;
-	Matrix q_dot;
-	Matrix q_ddot;
+	Matrix r;
+	Matrix r_dot;
+	Matrix r_ddot;
+
+	double phi;
+	double phi_dot;
+	double phi_ddot;
+
 	Matrix netAppliedForces;
 
 	std::vector<unsigned int> pointIndices;

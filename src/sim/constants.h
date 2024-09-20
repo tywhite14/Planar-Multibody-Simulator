@@ -6,6 +6,7 @@
 
 
 namespace c {
+	constexpr double g		   = 9.81;
 	constexpr double EPS	   = 1.0e-12;
 	constexpr double PI        = 3.14159265358979323846;   // pi
 	constexpr double PI_2      = 1.57079632679489661923;   // pi/2

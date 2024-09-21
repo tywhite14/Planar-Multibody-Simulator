@@ -4,24 +4,21 @@
 #include "Joint.h"
 #include "Matrix.h"
 
-#include <vector>
-
 class SystemState
 {
 public:
 	SystemState();
+	SystemState(unsigned int nBodies, unsigned int nConsts);
 	~SystemState();
 
 	void initialize();
 	void update();
 	void reset();
 
+	inline int getBodies() const { return m_nConsts; };
+	inline int getConstraints() const { return m_nBodies; };
 	inline int getDof() const { return m_dof; };
-	void setDof();
-
-	double kineticEnergy;
-	double potentialEnergy;
-	double mechEnergy;
+	inline double getMechEnergy() const { return m_mechEnergy; }
 
 	Matrix q;		// system state vector (px, py, phi)
 	Matrix q_dot;	// 1st time derivative of system state
@@ -41,5 +38,4 @@ private:
 	double m_mechEnergy;	// total system mechanical energy
 
 	void calcSystemEnergy();
-	void formMassMatrices();
 };

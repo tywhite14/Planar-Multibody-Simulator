@@ -3,7 +3,22 @@
 
 SystemState::SystemState() :
 	m_nBodies(0), 
-	m_dof(0)
+	m_nConsts(0),
+	m_dof(0),
+	m_posDriftCoeff(10),
+	m_velDriftCoeff(10),
+	m_mechEnergy(0)
+{
+	Debug("SystemState created");
+}
+
+SystemState::SystemState(unsigned int nBodies, unsigned int nConsts) :
+	m_nBodies(nBodies),
+	m_nConsts(nConsts),
+	m_dof(3 * m_nBodies - m_nConsts),
+	m_posDriftCoeff(10),
+	m_velDriftCoeff(10),
+	m_mechEnergy(0)
 {
 	Debug("SystemState created");
 }

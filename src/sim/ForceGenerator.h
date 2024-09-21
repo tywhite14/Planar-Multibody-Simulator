@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Matrix.h"
+#include "Vector.h"
 
 class ForceGenerator
 {
 public:
-	ForceGenerator();
+	ForceGenerator(unsigned int Pidx = -1);
 	ForceGenerator(const ForceGenerator& f);
 	~ForceGenerator();
 
-	unsigned int m_pIdx;
-	unsigned int m_bIdx;
-	Matrix value;
+	unsigned int pIdx;
+	unsigned int bIdx;
+	Vec3d value;
 
 private:
 };

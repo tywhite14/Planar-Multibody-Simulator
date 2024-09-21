@@ -2,8 +2,15 @@
 #include "log.h"
 
 Application::Application(double rate, double fps) :
-	m_rate(rate), m_fps(fps), m_isRunning(true)
+	m_rate(rate),
+	m_1_rate(1.0/rate),
+	m_fps(fps),
+	m_1_fps(1.0/fps),
+	m_timeEnd(1.0),
+	m_frameTime(0.0),
+	m_isRunning(true)
 {
+	loadModels();
 	Debug("Application created");
 }
 
@@ -14,7 +21,16 @@ Application::~Application()
 
 void Application::run()
 {
-	finalize();
+	m_frameTime = m_simClock.getSecondsDecimal() - m_frameTime;
+	if (m_frameTime >= m_1_rate) {
+		update();
+	}
+	if (m_frameTime >= m_1_fps) {
+		render();
+	}
+	if (m_simClock.getSecondsDecimal() > m_timeEnd) {
+		finalize();
+	}
 }
 
 void Application::finalize()
@@ -23,35 +39,12 @@ void Application::finalize()
 	print("Shutting down application");
 }
 
-void Application::addBodies(std::initializer_list<Body> bodiesIn)
+void Application::update()
 {
-
-	for (Body b : bodiesIn)
-	{
-		sysBodies.emplace_back(b);
-	}
+	Debug("Application updated");
 }
 
-void Application::addPoints(std::initializer_list<Point> pointsIn)
+void Application::render()
 {
-	for (auto& p : pointsIn)
-	{
-		//bod.points.emplace_back(p);
-	}
-}
-
-void Application::addJoints(std::initializer_list<Joint> jointsIn)
-{
-	for (auto& j : jointsIn)
-	{
-		sysJoints.emplace_back(j);
-	}
-}
-
-void Application::addForces(std::initializer_list<ForceGenerator> forcesIn)
-{
-	for (auto& f : forcesIn)
-	{
-		sysForces.emplace_back(f);
-	}
+	Debug("Application rendered");
 }

@@ -1,34 +1,17 @@
 #include "Joint.h"
 #include "log.h"
 
-Joint::Joint() :
-	m_type(Type::none),
-	m_iPidx(0),
-	m_jPidx(0),
-	m_iBidx(0),
-	m_jBidx(0),
-	m_iUidx(0),
-	m_jUidx(0),
+Joint::Joint(Type type, unsigned int iPidx, unsigned int jPidx) :
+	m_type(type),
 	m_nConsts(0),
-	m_nBodies(0)
+	m_nBodies(0),
+	m_iPidx(iPidx),
+	m_jPidx(jPidx),
+	m_iBidx(-1),
+	m_jBidx(-1),
+	m_iUidx(-1),
+	m_jUidx(-1)
 { 
-	initialize();
-	Debug("Joint created");
-}
-
-Joint::Joint(const Joint& j)
-{
-	*this = j;
-	Debug("Joint destroyed");
-}
-
-Joint::~Joint()
-{
-	Debug("Joint copied");
-}
-
-void Joint::initialize()
-{
 	switch (m_type)
 	{
 	case (Type::rev):
@@ -47,6 +30,23 @@ void Joint::initialize()
 		break;
 
 	case(Type::none):
-		Error("Undefined joint type");
+		FATAL("Undefined joint type", -1);
 	}
+
+	for (unsigned int i = 0; i < m_nConsts; i++) {
+		m_constraints.push_back({});
+	}
+
+	Debug("Joint created");
+}
+
+Joint::Joint(const Joint& j)
+{
+	*this = j;
+	Debug("Joint destroyed");
+}
+
+Joint::~Joint()
+{
+	Debug("Joint copied");
 }

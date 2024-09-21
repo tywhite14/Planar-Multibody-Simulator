@@ -11,7 +11,6 @@ public:
 	Body(const Body& b);
 	~Body();
 
-	void initialize();
 	void update();
 
 	double calcKineticEnergy() const;

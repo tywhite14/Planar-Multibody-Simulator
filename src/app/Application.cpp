@@ -6,10 +6,11 @@ Application::Application(double rate, double fps) :
 	m_1_rate(1.0/rate),
 	m_fps(fps),
 	m_1_fps(1.0/fps),
+	m_timeEnd(1.0),
 	m_frameTime(0.0),
-	m_timeEnd(1.0), 
 	m_isRunning(true)
 {
+	loadModels();
 	Debug("Application created");
 }
 

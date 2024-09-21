@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Matrix.h"
+#include "Vector.h"
 
 class ForceGenerator
 {
@@ -11,7 +11,7 @@ public:
 
 	unsigned int pIdx;
 	unsigned int bIdx;
-	Matrix value;
+	Vec3d value;
 
 private:
 };

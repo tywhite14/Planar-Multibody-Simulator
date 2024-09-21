@@ -12,8 +12,8 @@ struct  Constraint
 	}
 
 
-	Matrix D;				// Body j jacobian
-	Matrix D_dot;			// Body i jac_dot
+	//Matrix D;				// Body j jacobian
+	//Matrix D_dot;			// Body i jac_dot
 };
 
 class Joint

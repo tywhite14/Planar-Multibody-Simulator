@@ -30,7 +30,7 @@ Joint::Joint(Type type, unsigned int iPidx, unsigned int jPidx) :
 		break;
 
 	case(Type::none):
-		Error("Undefined joint type");
+		FATAL("Undefined joint type", -1);
 	}
 
 	for (unsigned int i = 0; i < m_nConsts; i++) {

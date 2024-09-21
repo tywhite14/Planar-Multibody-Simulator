@@ -42,7 +42,7 @@ private:
 	const double m_fps;		// Hz, update rate of rendering
 	const double m_1_fps;	// sec, inverse of render rate
 	const double m_timeEnd; // sec, temporary variable, time to end sim
-	double m_frameTime;		// sec, time between the last frame
+	double m_frameTime;		// sec, time of the previous frame
 	bool m_isRunning;
-	SystemClock m_simClock;
+	Clock m_clock;
 };

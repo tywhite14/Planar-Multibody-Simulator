@@ -35,7 +35,7 @@ namespace LOG
 				std::setw(6) << \
 				std::fixed << \
 				std::setprecision(4) << \
-				sysClock.getSecondsDecimal() << \
+				sysClock.getSeconds() << \
 				std::defaultfloat << "] "
 
 	//#define LOGFILE

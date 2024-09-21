@@ -7,8 +7,7 @@
 class SystemState
 {
 public:
-	SystemState();
-	SystemState(unsigned int nBodies, unsigned int nConsts);
+	SystemState(unsigned int nBodies = 0, unsigned int nConsts = 0);
 	~SystemState();
 
 	void initialize();

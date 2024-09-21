@@ -21,14 +21,17 @@ Application::~Application()
 
 void Application::run()
 {
-	m_frameTime = m_simClock.getSecondsDecimal() - m_frameTime;
+	print("ENTERED RUN");
+	exit(4);
+	m_frameTime = m_clock.restart();
+
 	if (m_frameTime >= m_1_rate) {
 		update();
 	}
 	if (m_frameTime >= m_1_fps) {
 		render();
 	}
-	if (m_simClock.getSecondsDecimal() > m_timeEnd) {
+	if (m_clock.getSeconds() > m_timeEnd) {
 		finalize();
 	}
 }

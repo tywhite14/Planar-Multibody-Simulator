@@ -5,43 +5,17 @@ Clock::Clock() : _start(std::chrono::high_resolution_clock::now())
 {
 }
 
-void Clock::restart()
+double Clock::restart()
 {
+	double t = getSeconds();
 	_start = std::chrono::high_resolution_clock::now();
-}
-
-double Clock::getSecondsDecimal() const
-{
-	return static_cast<double>((std::chrono::high_resolution_clock::now() - _start).count()) / 1'000'000'000.0;
-}
-
-long long Clock::getSeconds() const
-{
-	// integer division
-	return (std::chrono::high_resolution_clock::now() - _start).count() / 1'000'000'000;
-}
-
-long long Clock::getMillis() const
-{
-	// integer division
-	return (std::chrono::high_resolution_clock::now() - _start).count() / 1'000'000;
-}
-
-long long Clock::getMicros() const
-{
-	// integer division
-	return (std::chrono::high_resolution_clock::now() - _start).count() / 1000;
-}
-
-long long Clock::getNanos() const
-{
-	return (std::chrono::high_resolution_clock::now() - _start).count();
+	return t;
 }
 
 
-void SystemClock::restart()
+double SystemClock::restart()
 {
-	Error("You're attempting to restart the system clock. -100 aura.");
+	FATAL("You're attempting to restart the system clock. -100 aura.", -100);
 }
 
 SystemClock sysClock;

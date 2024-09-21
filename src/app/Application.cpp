@@ -6,12 +6,16 @@ Application::Application(double rate, double fps) :
 	m_1_rate(1.0/rate),
 	m_fps(fps),
 	m_1_fps(1.0/fps),
-	m_timeEnd(1.0),
-	m_frameTime(0.0),
+	m_timeEnd(3.0),
+	m_time(0.0),
+	m_updateTimer(0.0),
+	m_renderTimer(0.0),
 	m_isRunning(true)
 {
 	loadModels();
 	Debug("Application created");
+	DGB_APP_CALL(m_updateCounter = 0);
+	DGB_APP_CALL(m_renderCounter = 0);
 }
 
 Application::~Application()
@@ -21,18 +25,23 @@ Application::~Application()
 
 void Application::run()
 {
-	print("ENTERED RUN");
-	exit(4);
-	m_frameTime = m_clock.restart();
+	m_time = m_clock.getSeconds();
 
-	if (m_frameTime >= m_1_rate) {
+	// exit sim
+	if (m_time > m_timeEnd) {
+		finalize();
+	}
+
+	// update physics
+	while (m_time - m_updateTimer >= m_1_rate) {
+		m_updateTimer += m_1_rate;
 		update();
 	}
-	if (m_frameTime >= m_1_fps) {
+
+	// render graphics
+	if (m_time - m_renderTimer >= m_1_fps) {
+		m_renderTimer += m_1_fps;
 		render();
-	}
-	if (m_clock.getSeconds() > m_timeEnd) {
-		finalize();
 	}
 }
 
@@ -40,14 +49,17 @@ void Application::finalize()
 {
 	m_isRunning = false;
 	print("Shutting down application");
+	DGB_APP_CALL(print("Updates: " << m_updateCounter));
+	DGB_APP_CALL(print("Renders: " << m_renderCounter));
 }
 
 void Application::update()
 {
-	Debug("Application updated");
+	DGB_APP_CALL(m_updateCounter++);
 }
 
 void Application::render()
 {
-	Debug("Application rendered");
+	print("Application rendered");
+	DGB_APP_CALL(m_renderCounter++);
 }

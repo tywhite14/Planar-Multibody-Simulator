@@ -17,17 +17,23 @@ Currently, I do all development on the `dev` branch and once it reaches a stable
 Use Visual Studio 2019 or newer. Open the .sln file. Build for Release or Debug.
 
 ### Linux
-Navigate to the top-level of the project directory. run the bash script `scripts/buildPMS.sh`
+Navigate to the top-level of the project directory. Run the bash script `./scripts/buildPMS.sh`
 
 ## Roadmap
-- make it work for one specific scenario
-- set up GUI application so the user can see the simulation
-- make it work for arbitrary scenarios
+
+### Version 1.0
+- finish fleshing out the framework for the application
+- Get it to a state where it seems to be working properly
+- set up GUI so the user can see the simulation
+
+### Version 2.0
 - add more options (more joints, more body types, more customization), play/pause feature
-- let user define a scenario purely from the application UI. i.e., drag-and-drop bodies and hotkeys for making joints.
+- let user define a scenario purely from the application UI. i.e., drag-and-drop bodies and hotkeys for making joints
 - let user save and load scenarios
 - implement some sort of real-time plotting functionality (e.g., plot lateral force on a body over time)
 - data logging function (maybe support exporting directly to .mat format for MATLAB post-processing)
+
+### Nice to have
 - optimization
 - unit tests
 - debugging tools (profiler)

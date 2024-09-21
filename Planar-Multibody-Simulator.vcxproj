@@ -90,7 +90,6 @@
     <ClCompile Include="src\sim\ForceGenerator.cpp" />
     <ClCompile Include="src\sim\Point.cpp" />
     <ClCompile Include="src\sim\Body.cpp" />
-    <ClCompile Include="src\utils\Clock.cpp" />
     <ClCompile Include="src\sim\Joint.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\sim\SystemState.cpp" />

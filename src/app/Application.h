@@ -10,6 +10,13 @@
 
 #define DEFINE_MODELS void Application::loadModels()
 
+#define DBG_APP
+#ifdef  DBG_APP
+#define DGB_APP_CALL(x) x
+#else
+#define DGB_APP_CALL(x)
+#endif
+
 class Application
 {
 public:
@@ -42,7 +49,13 @@ private:
 	const double m_fps;		// Hz, update rate of rendering
 	const double m_1_fps;	// sec, inverse of render rate
 	const double m_timeEnd; // sec, temporary variable, time to end sim
-	double m_frameTime;		// sec, time between the last frame
+	double m_time;		// sec, time of the previous frame
+	double m_updateTimer;
+	double m_renderTimer;
 	bool m_isRunning;
-	SystemClock m_simClock;
+	Clock m_clock;
+
+	// debugging
+	DGB_APP_CALL(unsigned long m_updateCounter);
+	DGB_APP_CALL(unsigned long m_renderCounter);
 };

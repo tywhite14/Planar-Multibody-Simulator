@@ -8,9 +8,7 @@
 
 #include "Clock.h"
 
-// not the best spot for the system clock 
-// but this makes the compiler happy
-extern SystemClock sysClock;
+static Clock sysClock;
 
 #ifdef _DEBUG
 

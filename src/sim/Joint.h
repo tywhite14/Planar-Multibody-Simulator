@@ -6,13 +6,7 @@
 
 struct  Constraint
 {
-	Constraint() :
-		m_iPidx(0),
-		m_jPidx(0),
-		m_iBidx(0),
-		m_jBidx(0),
-		m_iUidx(0),
-		m_jUidx(0)
+	Constraint()
 	{
 
 	}
@@ -34,7 +28,7 @@ public:
 		rigid
 	};
 
-	Joint();
+	Joint(Type type = Type::none, unsigned int iPidx = -1, unsigned int jPidx = -1);
 	Joint(const Joint& j);
 	~Joint();
 	

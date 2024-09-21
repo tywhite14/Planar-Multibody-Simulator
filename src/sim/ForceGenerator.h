@@ -5,12 +5,12 @@
 class ForceGenerator
 {
 public:
-	ForceGenerator();
+	ForceGenerator(unsigned int Pidx = -1);
 	ForceGenerator(const ForceGenerator& f);
 	~ForceGenerator();
 
-	unsigned int m_pIdx;
-	unsigned int m_bIdx;
+	unsigned int pIdx;
+	unsigned int bIdx;
 	Matrix value;
 
 private:

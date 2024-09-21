@@ -8,6 +8,8 @@
 
 #include <vector>
 
+#define DEFINE_MODELS void Application::loadModels()
+
 class Application
 {
 public:
@@ -17,10 +19,11 @@ public:
 	void run();
 	void finalize();
 
-	void addBodies(std::initializer_list<Body>  bodiesIn);
-	void addPoints(std::initializer_list<Point> pointsIn);
-	void addJoints(std::initializer_list<Joint> jointsIn);
-	void addForces(std::initializer_list<ForceGenerator> forcesIn);
+	void loadModels();
+	inline void addBodies(std::initializer_list<Body>  bodiesIn) { m_bodies = bodiesIn; }
+	inline void addPoints(std::initializer_list<Point> pointsIn) { m_points = pointsIn; }
+	inline void addJoints(std::initializer_list<Joint> jointsIn) { m_joints = jointsIn; }
+	inline void addForces(std::initializer_list<ForceGenerator> forcesIn) { m_forces = forcesIn; }
 
 	inline bool isRunning() const { return m_isRunning; }
 
@@ -29,6 +32,7 @@ private:
 	void render();
 
 	std::vector<Body>  m_bodies;
+	std::vector<Point> m_points;
 	std::vector<Joint> m_joints;
 	std::vector<ForceGenerator> m_forces;
 	SystemState m_systemState;

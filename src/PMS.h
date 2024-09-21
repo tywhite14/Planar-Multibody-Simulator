@@ -6,3 +6,4 @@
 #include "sim/ForceGenerator.h"
 #include "sim/SystemState.h"
 #include "sim/constants.h"
+#include "app/Application.h"

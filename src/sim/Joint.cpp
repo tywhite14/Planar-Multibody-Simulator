@@ -1,10 +1,16 @@
 #include "Joint.h"
 #include "log.h"
 
-Joint::Joint() :
-	m_type(Type::none),
+Joint::Joint(Type type, unsigned int iPidx, unsigned int jPidx) :
+	m_type(type),
 	m_nConsts(0),
-	m_nBodies(0)
+	m_nBodies(0),
+	m_iPidx(iPidx),
+	m_jPidx(jPidx),
+	m_iBidx(-1),
+	m_jBidx(-1),
+	m_iUidx(-1),
+	m_jUidx(-1)
 { 
 	switch (m_type)
 	{
@@ -27,7 +33,7 @@ Joint::Joint() :
 		Error("Undefined joint type");
 	}
 
-	for (int i = 0; i < m_nConsts; i++) {
+	for (unsigned int i = 0; i < m_nConsts; i++) {
 		m_constraints.push_back({});
 	}
 

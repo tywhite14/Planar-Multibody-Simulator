@@ -38,39 +38,6 @@ void Application::finalize()
 	print("Shutting down application");
 }
 
-void Application::addBodies(std::initializer_list<Body> bodiesIn)
-{
-
-	for (Body b : bodiesIn)
-	{
-		m_bodies.emplace_back(b);
-	}
-}
-
-void Application::addPoints(std::initializer_list<Point> pointsIn)
-{
-	for (auto& p : pointsIn)
-	{
-		//bod.points.emplace_back(p);
-	}
-}
-
-void Application::addJoints(std::initializer_list<Joint> jointsIn)
-{
-	for (auto& j : jointsIn)
-	{
-		m_joints.emplace_back(j);
-	}
-}
-
-void Application::addForces(std::initializer_list<ForceGenerator> forcesIn)
-{
-	for (auto& f : forcesIn)
-	{
-		m_forces.emplace_back(f);
-	}
-}
-
 void Application::update()
 {
 	Debug("Application updated");

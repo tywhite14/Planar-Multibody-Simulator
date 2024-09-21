@@ -1,12 +1,7 @@
 #include "Point.h"
 #include "log.h"
 
-Point::Point() :
-	bIdx(0),
-	sP_local(2, 1),
-	sP(2, 1),
-	sP_dot(2, 1),
-	sP_ddot(2, 1)
+Point::Point(unsigned int bidx, Vec2d localPos) : bIdx(bidx), sP_local(localPos)
 {
 	Debug("Point created");
 }

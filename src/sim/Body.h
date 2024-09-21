@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Matrix.h"
-
+#include "Vector.h"
 #include <vector>
 
 class Body
@@ -17,21 +17,20 @@ public:
 	double calcKineticEnergy() const;
 
 	// physical properties
-	double mass;
-	double Moi;
-	double length;
+	double mass;		// mass
+	double Moi;			// moment of inertia
+	double len;			// length
 
-	// TODO: Just make a damn Vec2d/Vec3d class
 	// state
-	Matrix r;
-	Matrix r_dot;
-	Matrix r_ddot;
+	Vec2d r;			// position vector
+	Vec2d r_dot;		// velocity vector
+	Vec2d r_ddot;		// acceleration vector
 
-	double phi;
-	double phi_dot;
-	double phi_ddot;
+	double phi;			// angle
+	double phi_dot;		// angular velocity
+	double phi_ddot;	// angular acceleration
 
-	Matrix netAppliedForces;
+	Matrix h_a;			// net applied forces/torques
 
 	std::vector<unsigned int> pointIndices;
 

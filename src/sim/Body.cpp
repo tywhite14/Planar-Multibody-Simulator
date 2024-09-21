@@ -14,6 +14,7 @@ Body::Body() :
 	animWidth(0.f),
 	animRadius(0.f)
 {
+	Debug("Body created");
 }
 
 Body::Body(const Body& b)

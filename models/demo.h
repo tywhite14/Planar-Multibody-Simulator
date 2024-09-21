@@ -23,9 +23,8 @@ DEFINE_MODELS
 
 	//// POINTS ===============
 	Point A0(-1, Vec2d(0.0, 7.5));
-
-	Point A1(0, Vec2d(-L1 / 2.0, 0.0));
-	Point B1(0, Vec2d( L1 / 2.0, 0.0));
+	Point A1(0,  Vec2d(-L1 / 2.0, 0.0));
+	Point B1(0,  Vec2d( L1 / 2.0, 0.0));
 
 	addPoints({ A0, A1, B1 });
 

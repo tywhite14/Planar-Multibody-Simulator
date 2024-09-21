@@ -43,10 +43,10 @@ Joint::Joint(Type type, unsigned int iPidx, unsigned int jPidx) :
 Joint::Joint(const Joint& j)
 {
 	*this = j;
-	Debug("Joint destroyed");
+	Debug("Joint copied");
 }
 
 Joint::~Joint()
 {
-	Debug("Joint copied");
+	Debug("Joint destroyed");
 }

@@ -7,17 +7,20 @@
 class SystemState
 {
 public:
-	SystemState(unsigned int nBodies = 0, unsigned int nConsts = 0);
+	SystemState();
 	~SystemState();
 
 	void initialize();
 	void update();
 	void reset();
 
-	inline int getBodies() const { return m_nConsts; };
-	inline int getConstraints() const { return m_nBodies; };
 	inline int getDof() const { return m_dof; };
 	inline double getMechEnergy() const { return m_mechEnergy; }
+
+	unsigned int nBodies;	// number of bodies in the system
+	unsigned int nConsts;	// number of constraints in the system
+	double k_c;				// coefficient of position drift correction
+	double k_c_dot;			// coefficient of velocity drift correction
 
 	Matrix q;		// system state vector (px, py, phi)
 	Matrix q_dot;	// 1st time derivative of system state
@@ -29,11 +32,7 @@ public:
 	Matrix h_r;		// array of net system reaction forces
 
 private:
-	unsigned int m_nBodies;	// number of bodies in the system
-	unsigned int m_nConsts;	// number of constraints in the system
 	unsigned int m_dof;		// degrees of freedom of the system
-	double m_posDriftCoeff;	// coefficient of position drift
-	double m_velDriftCoeff;	// coefficient of velocity drift
 	double m_mechEnergy;	// total system mechanical energy
 
 	void calcSystemEnergy();

@@ -1,12 +1,12 @@
 #include "SystemState.h"
 #include "log.h"
 
-SystemState::SystemState(unsigned int nBodies, unsigned int nConsts) :
-	m_nBodies(nBodies),
-	m_nConsts(nConsts),
-	m_dof(3 * m_nBodies - m_nConsts),
-	m_posDriftCoeff(10),
-	m_velDriftCoeff(10),
+SystemState::SystemState() :
+	nBodies(0),
+	nConsts(0),
+	m_dof(0),
+	k_c(10),
+	k_c_dot(10),
 	m_mechEnergy(0)
 {
 	Debug("SystemState created");
@@ -19,7 +19,7 @@ SystemState::~SystemState()
 
 void SystemState::initialize()
 {
-	m_dof = 3 * m_nBodies - m_nConsts;
+	m_dof = 3 * nBodies - nConsts;
 }
 
 void SystemState::update()

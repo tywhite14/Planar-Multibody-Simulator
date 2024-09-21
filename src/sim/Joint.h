@@ -7,10 +7,7 @@
 struct  Constraint
 {
 	Constraint()
-	{
-
-	}
-
+	{	}
 
 	//Matrix D;				// Body j jacobian
 	//Matrix D_dot;			// Body i jac_dot
@@ -28,7 +25,7 @@ public:
 		rigid
 	};
 
-	Joint(Type type = Type::none, unsigned int iPidx = -1, unsigned int jPidx = -1);
+	Joint(Type type = Type::none, unsigned int ipidx = -1, unsigned int jpidx = -1);
 	Joint(const Joint& j);
 	~Joint();
 	
@@ -36,16 +33,17 @@ public:
 	inline unsigned int getNumBodies() const { return m_nBodies; }
 	inline Type getType() const { return m_type; }
 
+	unsigned int iPidx;	// point Pi
+	unsigned int jPidx;	// point Pj
+	unsigned int iBidx;	// body index i
+	unsigned int jBidx;	// body index j
+	unsigned int iUidx;	// unit vector u_i index
+	unsigned int jUidx;	// unit vector u_j index
+
 private:
 	Type m_type;
 	unsigned int m_nConsts; // number of constraints
 	unsigned int m_nBodies; // number of bodies involved
-	unsigned int m_iPidx;	// point Pi
-	unsigned int m_jPidx;	// point Pj
-	unsigned int m_iBidx;	// body index i
-	unsigned int m_jBidx;	// body index j
-	unsigned int m_iUidx;	// unit vector u_i index
-	unsigned int m_jUidx;	// unit vector u_j index
 
 	std::vector<Constraint> m_constraints;
 };

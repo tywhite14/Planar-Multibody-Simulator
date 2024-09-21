@@ -1,16 +1,16 @@
 #include "Joint.h"
 #include "log.h"
 
-Joint::Joint(Type type, unsigned int iPidx, unsigned int jPidx) :
+Joint::Joint(Type type, unsigned int ipidx, unsigned int jpidx) :
 	m_type(type),
 	m_nConsts(0),
 	m_nBodies(0),
-	m_iPidx(iPidx),
-	m_jPidx(jPidx),
-	m_iBidx(-1),
-	m_jBidx(-1),
-	m_iUidx(-1),
-	m_jUidx(-1)
+	iPidx(ipidx),
+	jPidx(jpidx),
+	iBidx(-1),
+	jBidx(-1),
+	iUidx(-1),
+	jUidx(-1)
 { 
 	switch (m_type)
 	{

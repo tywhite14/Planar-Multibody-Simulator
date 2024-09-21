@@ -16,7 +16,7 @@ class Matrix
 public:
 	Matrix();
 	Matrix(const double s);
-	Matrix(const int rows, const int cols);
+	Matrix(const int rows, const int cols, double initVal = 0.0);
 	Matrix(const Matrix& b);
 	~Matrix();
 
@@ -31,8 +31,8 @@ public:
 	void		LUdecomp(Matrix& L, Matrix& U) const;
 	Matrix		solve(Matrix& b) const;
 	Matrix		identity() const;
-	Matrix		zeros() const;
-	Matrix		ones() const;
+	static Matrix zeros(int r = 1, int c = -1);
+	static Matrix ones(int r = 1, int c = -1);
 	Matrix		random() const;
 	Matrix		randi(const int max, bool pm = true) const;
 

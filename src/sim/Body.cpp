@@ -28,11 +28,6 @@ Body::~Body()
 	Debug("Body destroyed");
 }
 
-void Body::update()
-{
-
-}
-
 double Body::calcKineticEnergy() const
 {
 	return 0.5 * mass * std::pow(r.magnitude(), 2);

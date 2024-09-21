@@ -11,8 +11,6 @@ public:
 	Body(const Body& b);
 	~Body();
 
-	void update();
-
 	double calcKineticEnergy() const;
 
 	// physical properties

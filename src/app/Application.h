@@ -23,6 +23,7 @@ public:
 	Application(double rate = 1000, double fps = 75);
 	~Application();
 
+	void initialize();
 	void run();
 	void finalize();
 
@@ -31,6 +32,10 @@ public:
 	inline void addPoints(std::initializer_list<Point> pointsIn) { m_points = pointsIn; }
 	inline void addJoints(std::initializer_list<Joint> jointsIn) { m_joints = jointsIn; }
 	inline void addForces(std::initializer_list<ForceGenerator> forcesIn) { m_forces = forcesIn; }
+	
+	void updateBodies();
+	void updatePoints();
+	void updateJoints();
 
 	inline bool isRunning() const { return m_isRunning; }
 
@@ -42,17 +47,22 @@ private:
 	std::vector<Point> m_points;
 	std::vector<Joint> m_joints;
 	std::vector<ForceGenerator> m_forces;
-	SystemState m_systemState;
+	SystemState m_sysState;
 
+	unsigned int m_nB;	// number of bodies
+	unsigned int m_nP;	// number of points
+	unsigned int m_nJ;	// number of joints
+	unsigned int m_nF;	// number of forces
+
+	bool m_isRunning;
 	const double m_rate;	// Hz, update rate system physics
-	const double m_1_rate;  // sec, inverse of rate
 	const double m_fps;		// Hz, update rate of rendering
+	const double m_1_rate;  // sec, inverse of rate
 	const double m_1_fps;	// sec, inverse of render rate
 	const double m_timeEnd; // sec, temporary variable, time to end sim
 	double m_time;		// sec, time of the previous frame
 	double m_updateTimer;
 	double m_renderTimer;
-	bool m_isRunning;
 	Clock m_clock;
 
 	// debugging

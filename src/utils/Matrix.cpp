@@ -8,12 +8,12 @@ Matrix::Matrix(const double s) : m_rows(1), m_cols(1), m_count(1)
 	allocate(s);
 }
 
-Matrix::Matrix(const int rows, const int cols) :
+Matrix::Matrix(const int rows, const int cols, double initVal = 0.0) :
 	m_rows(rows),
 	m_cols(cols),
 	m_count(rows* cols)
 {
-	allocate();
+	allocate(initVal);
 }
 
 Matrix::Matrix(const Matrix& b) : m_rows(b.m_rows), m_cols(b.m_cols), m_count(b.m_count)
@@ -222,21 +222,28 @@ Matrix Matrix::identity() const
 	return res;
 }
 
-Matrix Matrix::zeros() const
+Matrix Matrix::zeros(int r = 1, int c = -1)
 {
-	return Matrix();
-}
-
-Matrix Matrix::ones() const
-{
-	Matrix res(m_rows, m_cols);
-
-	for (int i = 0; i < m_count; i++)
-	{
-		res.m_data[i] = 1.0;
+	if (c == -1) {
+		c = r;
 	}
 
-	return res;
+	return Matrix(r, c);
+}
+
+Matrix Matrix::ones(int r = 1, int c = -1)
+{
+#ifdef BOUNDS_CHECK
+	if (r < 0) {
+		FATAL("ones: cannot have negative number of rows", -r);
+	}
+#endif
+
+	if (c == -1) {
+		c = r;
+	}
+
+	return Matrix(r, c, 1.0);
 }
 
 Matrix Matrix::random() const
@@ -389,11 +396,19 @@ Matrix Matrix::operator=(const std::initializer_list<double>& list)
 
 Matrix& Matrix::operator=(const Matrix& b)
 {
-#ifdef BOUNDS_CHECK
+
 	if (m_rows != b.m_rows || m_cols != b.m_cols) {
-		FATAL("Assigning matrix of different size.", -1);
+		if (m_rows != 0 || m_cols != 0) {
+			FATAL("Assigning matrix of different size.", -1);
+		}
+
+		// let it slide of size zero, we're just initializing
+		m_count = b.m_count;
+		m_rows  = b.m_rows;
+		m_cols  = b.m_cols;
+		deallocate();
+		allocate();
 	}
-#endif
 
 	for (int i = 0; i < m_count; ++i) {
 		m_data[i] = b.m_data[i];

@@ -5,18 +5,14 @@
 class Clock
 {
 public:
-	Clock();
+	Clock() : m_start(std::chrono::high_resolution_clock::now())
+	{
+	}
 
-	double restart();
 	inline double getSeconds() const {
-		return static_cast<double>((std::chrono::high_resolution_clock::now() - _start).count()) / 1'000'000'000.0;
+		return std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - m_start).count();
 	}
 
 protected:
-	std::chrono::time_point<std::chrono::high_resolution_clock> _start;
-};
-
-class SystemClock : public Clock
-{
-	double restart();
+	std::chrono::time_point<std::chrono::high_resolution_clock> m_start;
 };

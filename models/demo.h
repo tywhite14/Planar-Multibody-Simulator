@@ -21,8 +21,8 @@ DEFINE_MODELS
 
 	// POINTS ===============
 	Point* A0 = new Point(Vec2d(0.0, 7.5));
-	Point* A1 = new Point(Vec2d(-L1 / 2.0, 0.0), 0);
-	Point* B1 = new Point(Vec2d( L1 / 2.0, 0.0), 0);
+	Point* A1 = new Point(Vec2d(-L1 / 2.0, 0.0), b1);
+	Point* B1 = new Point(Vec2d( L1 / 2.0, 0.0), b1);
 	addPoints({ A0, A1, B1 });
 
 	// JOINTS ===============

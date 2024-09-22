@@ -27,10 +27,10 @@ Application::Application(double rate, double fps) :
 
 Application::~Application()
 {
-	for (auto b : m_bodies) { delete b; }
-	for (auto p : m_points) { delete p;	}
-	for (auto f : m_forces) { delete f; }
-	for (auto j : m_joints) { delete j;	}
+	for (auto& b : m_bodies) { delete b; }
+	for (auto& p : m_points) { delete p; }
+	for (auto& f : m_forces) { delete f; }
+	for (auto& j : m_joints) { delete j; }
 
 	Debug("Application destroyed");
 }
@@ -54,80 +54,64 @@ void Application::initialize()
 	m_sysState.k_c		= 20;
 	m_sysState.k_c_dot	= 20;
 
-	// initialize bodies
+	// initialize points
 	for (int i = 0; i < m_nP; i++) {
-		auto& p = *m_points.at(i);
+		const Point& p = *m_points.at(i);
 
-		if (p.isOnGnd()) {
+		if (p.isOnGnd())
 			continue;
-		}
-		
-		// populate each body's point list
-		auto& b = *m_bodies.at(p.bIdx);
+
+		auto& b = *p.B;
 		b.pointIndices.push_back(i);
 	}
 
-	// initialize points
+	// try brining each of these into their classes. i.e., for (p : m_points), p.update()
 	updatePoints();
 
 	// initialize joints
-	unsigned int row = 0;
-	for (int i = 0; i < m_nJ; i++) {
-		auto& j = *m_joints.at(i);
+	for (const Joint* j : m_joints) {
 
-		switch (j.getType())
+		switch (j->getType())
 		{
 		case (Joint::rev): {
-			auto& r = *(Revolute*)m_joints.at(i);
+			Revolute& r = *(Revolute*)j;
 
 			// simple error checking
 			if (r.Pi->isOnGnd() && r.Pj->isOnGnd()) {
 				FATAL("Defining revolute joint between ground and ground, dumbass.", -1);
 			}
 
-			// if defined by a point, populate which body that point belongs to
-			if (!r.Pi->isOnGnd()) {
-				r.Bi = m_bodies.at(r.Pi->bIdx);
-				r.coli = 3 * r.Pi->bIdx;  // hella sus indexing
-			}
-			if (!r.Pj->isOnGnd()) {
-				r.Bj = m_bodies.at(r.Pj->bIdx);
-				r.colj = 3 * r.Pj->bIdx;  // hella sus indexing
-			}
-
 			r.updateJacobians();
-			r.row = row;
+			r.row = m_sysState.nConsts;
+			m_sysState.nConsts += r.getNumConstraints();
 			break;
 		}
 		default:
-			Error("Joint type not defined yet");
+			FATAL("Joint type not defined yet", -1);
 		}
-
-		row += j.getNumConstraints();
 	}
 
 	// initialize forces
-	for (int i = 0; i < m_nF; i++) {
-		auto& f = *m_forces.at(i);
+	for (ForceGenerator* f : m_forces) {
 
 		// TODO: actaully handle gravity
 
-		if (!f.isPointDefined() && !f.isBodyDefined()) {
-			Error("Ill-defined force");
+		if (!f->isPointDefined() && !f->isBodyDefined()) {
+			FATAL("Ill-defined force", -1);
 		}
 
-		else if (f.isPointDefined()) {
-			auto& p = *f.P;
+		else if (f->isPointDefined()) {
+			const Point& p = *f->P;
 			
 			// defined point, populate which body
-			if (!f.isBodyDefined()) {
-				f.B = m_bodies.at(p.bIdx);
+			if (!f->isBodyDefined()) {
+				f->B = p.B;
 			}
 
 			// defined body and point on different body
-			else if (f.isBodyDefined()) {
-				if (f.B != m_bodies.at(p.bIdx)) {
-					Error("Conflicing body definitions in force");
+			else if (f->isBodyDefined()) {
+				if (f->B != p.B) {
+					FATAL("Conflicing body definitions in force", 1);
 				}
 			}
 		}
@@ -135,15 +119,15 @@ void Application::initialize()
 
 	// finish initializing system state
 	for (int i = 0; i < m_nB; i++) {
-		auto& b = *m_bodies.at(i);
+		const Body& b = *m_bodies.at(i);
 
-		Matrix b_q =  {1, 2, 3};  //{ b.r.x, b.r.y, b.phi };
-		Matrix b_qd = {1, 2, 3};  //{ b.r_dot.x, b.r_dot.y, b.phi_dot };
+		const Matrix b_q = b.r;
+		const Matrix b_qd = b.r_dot;
 
 		int idx = 3 * i;
-		for (int i = idx; i < idx+2; i++) {
-			m_sysState.q(i) = b_q(i);
-			m_sysState.q_dot(i) = b_qd(i);
+		for (int ii = idx; ii < idx+2; ii++) {
+			m_sysState.q(ii) = b_q(ii);
+			m_sysState.q_dot(ii) = b_qd(ii);
 		}
 
 		m_sysState.W(idx, idx) = 1.0 / b.mass;
@@ -152,9 +136,14 @@ void Application::initialize()
 
 		m_sysState.e_m += b.calcKineticEnergy();
 		if (m_applyGravity) {
-			// PE = m*g*h
-			m_sysState.e_m += b.mass * m_gravAcc * b.r.y;
+			m_sysState.e_m += b.mass * m_gravAcc * b.r.y; // PE = m*g*h
 		}
+
+		// now that we know number of constraints, finish initializing system state
+		const int nC = m_sysState.nConsts;
+		m_sysState.J	 = Matrix::zeros(3 * nC, 3 * m_nB);
+		m_sysState.J_dot = Matrix::zeros(3 * nC, 3 * m_nB);
+		m_sysState.f_d	 = Matrix::zeros(3 * nC, 1);
 
 		// that might have taken a while, reset internal clock
 		m_clock.reset();
@@ -193,16 +182,57 @@ void Application::update()
 	}
 
 	// sum up each body's net force
-	for (auto& f : m_forces) {
+	for (const ForceGenerator* f : m_forces) {
 		Body& b = *(f->B);
 		b.h_a + f->value;
 	}
 
-	// form system h_a from each body's net h_a
+	// update system h_a and mechanical energy
+	m_sysState.e_m = 0.0;
+	for (int i = 0; i < m_nB; i++) {
 
+		const Body& b = *m_bodies.at(i);
+		const Matrix h_a = b.h_a;
+		
+		// form system h_a from each body's net h_a
+		int idx = 3 * i;
+		for (int ii = idx; ii < idx + 2; ii++) {
+			m_sysState.h_a(ii) = h_a(ii);
+		}
+
+		m_sysState.e_m += b.calcKineticEnergy();
+		if (m_applyGravity) {
+			m_sysState.e_m += b.mass * m_gravAcc * b.r.y; // PE = m*g*h
+		}
+	}
 
 	// update system matrices from joints
+	for (int i = 0; i < m_nJ; i++) {
+		const Joint* j = m_joints.at(i);
 
+		switch (j->getType())
+		{
+		case (Joint::rev):
+			const Revolute& rev = *(Revolute*)j;
+
+			// calculate distance between points
+			Point& Pi = *rev.Pi;
+			Point& Pj = *rev.Pj;
+			const Vec2d r_ji(Pj.rP - Pi.rP);
+			const Vec2d v_ji(Pj.rP_dot - Pi.rP_dot);
+			const Matrix f_d = m_sysState.k_c * r_ji - m_sysState.k_c_dot * v_ji;
+
+			// update system drift force
+			const int idx = 2 * i + 2;
+			for (int ii = 0; ii < idx; ii++) {
+				m_sysState.f_d(ii) = f_d(ii);
+			}
+
+			// update system jacobians
+
+		}
+
+	}
 
 	// integrate system
 
@@ -233,18 +263,17 @@ void Application::updateBodies()
 
 void Application::updatePoints()
 {
-	for (int i = 0; i < m_nP; i++) {
-		auto& p = *m_points.at(i);
+	for (Point* p : m_points) {
 
-		if (p.isOnGnd()) {
+		if (p->isOnGnd()) {
 			continue;
 		}
 
-		auto& b = *m_bodies.at(p.bIdx);
-		p.sP = p.sP_local.rotate(b.phi);
-		p.sP_dot = p.sP.rot90() * b.phi_dot;
-		p.rP = b.r + p.sP;
-		p.rP_dot = b.r_dot + p.sP_dot;
+		auto& b = *p->B;
+		p->sP = p->sP_local.rotate(b.phi);
+		p->sP_dot = p->sP.rot90() * b.phi_dot;
+		p->rP = b.r + p->sP;
+		p->rP_dot = b.r_dot + p->sP_dot;
 	}
 }
 

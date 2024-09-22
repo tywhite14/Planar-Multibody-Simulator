@@ -28,8 +28,9 @@ public:
 	Matrix J;		// system Jacobian
 	Matrix J_dot;	// 1st time derivative of system Jacobian
 	Matrix W;		// inverse of system mass matrix
-	Matrix h_a;		// array of net system applied forces
-	Matrix h_r;		// array of net system reaction forces
+	Matrix h_a;		// vector of net system applied forces
+	Matrix h_r;		// vector of net system reaction forces
+	Matrix f_d;		// system drift force vector
 
 private:
 	unsigned int m_dof;		// degrees of freedom of the system

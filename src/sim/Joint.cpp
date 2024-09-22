@@ -26,9 +26,7 @@ Joint::~Joint()
 Revolute::Revolute(Point* pi, Point* pj) :
 	Joint(rev),
 	Pi(pi),
-	Pj(pj),
-	Bi(nullptr),
-	Bj(nullptr)
+	Pj(pj)
 {
 	m_nConsts = 2;
 	m_nBodies = 2;
@@ -44,6 +42,8 @@ void Revolute::updateJacobians()
 {
 	const Vec2d& vi = Pi->sP.rot90();
 	const Vec2d& vj = Pj->sP.rot90();
+	const Body* Bi = Pi->B;
+	const Body* Bj = Pj->B;
 
 	if (Pi->isOnGnd()) {
 		const Vec2d& b = Pj->sP * Bj->phi_dot;
@@ -53,12 +53,14 @@ void Revolute::updateJacobians()
 	}
 	else if (Pj->isOnGnd()) {
 		const Vec2d& b = Pi->sP * Bi->phi_dot;
+
 		Di = { -1, 0, -vi.x, 0, -1, -vi.y };
 		Di_dot = { 0, 0, b.x, 0, 0, b.y };
 	}
 	else {
 		const Vec2d& bi = Pi->sP * Bi->phi_dot;
 		const Vec2d& bj = Pj->sP * Bj->phi_dot;
+
 		Di = { -1, 0, -vi.x, 0, -1, -vi.y };
 		Dj = { -1, 0, -vj.x, 0, -1, -vj.y };
 		Di_dot = { 0, 0, bi.x, 0, 0, bi.y };

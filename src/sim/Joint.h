@@ -48,6 +48,4 @@ public:
 
 	Point* Pi;
 	Point* Pj;
-	Body*  Bi;
-	Body*  Bj;
 };

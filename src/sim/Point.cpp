@@ -1,7 +1,7 @@
 #include "Point.h"
 #include "log.h"
 
-Point::Point(Vec2d localPos, int bidx) : bIdx(bidx), sP_local(localPos)
+Point::Point(Vec2d localPos, Body* body) : B(body), sP_local(localPos)
 {
 	Debug("Point created");
 }

@@ -8,7 +8,7 @@ Matrix::Matrix(const double s) : m_rows(1), m_cols(1), m_count(1)
 	allocate(s);
 }
 
-Matrix::Matrix(const int rows, const int cols, double initVal = 0.0) :
+Matrix::Matrix(const int rows, const int cols, double initVal) :
 	m_rows(rows),
 	m_cols(cols),
 	m_count(rows* cols)
@@ -222,7 +222,7 @@ Matrix Matrix::identity() const
 	return res;
 }
 
-Matrix Matrix::zeros(int r = 1, int c = -1)
+Matrix Matrix::zeros(int r, int c)
 {
 	if (c == -1) {
 		c = r;
@@ -231,7 +231,7 @@ Matrix Matrix::zeros(int r = 1, int c = -1)
 	return Matrix(r, c);
 }
 
-Matrix Matrix::ones(int r = 1, int c = -1)
+Matrix Matrix::ones(int r, int c)
 {
 #ifdef BOUNDS_CHECK
 	if (r < 0) {
@@ -382,8 +382,14 @@ bool Matrix::operator==(const Matrix& b) const
 Matrix Matrix::operator=(const std::initializer_list<double>& list)
 {
 	// probably don't bound check this one
-	if (list.size() != m_count) {
+	if (m_count != 0 && list.size() != m_count) {
 		FATAL("Initializer list is not the same size as matrix.", 9);
+	}
+
+	// if initializing a new, empty matrix, just make row vector
+	if (m_count == 0) {
+		m_rows = (int) list.size();
+		m_cols = 1;
 	}
 
 	int i = 0;

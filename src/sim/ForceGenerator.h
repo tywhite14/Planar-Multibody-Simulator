@@ -1,16 +1,20 @@
 #pragma once
 
+#include "Body.h"
+#include "Point.h"
 #include "Vector.h"
 
 class ForceGenerator
 {
 public:
-	ForceGenerator(unsigned int Pidx = -1);
+	ForceGenerator(Point* p = nullptr);
 	ForceGenerator(const ForceGenerator& f);
 	~ForceGenerator();
 
-	unsigned int pIdx;
-	unsigned int bIdx;
+	inline bool isPointDefined() const { return P != nullptr; }
+	inline bool isBodyDefined()  const { return B != nullptr; }
+	Point* P;
+	Body* B;
 	Vec3d value;
 
 private:

@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#define DEFINE_MODELS void Application::loadModels()
+//#define DEFINE_MODELS void Application::loadModels()
 
 #define DBG_APP
 #ifdef  DBG_APP
@@ -28,42 +28,45 @@ public:
 	void finalize();
 
 	void loadModels();
-	inline void addBodies(std::initializer_list<Body>  bodiesIn) { m_bodies = bodiesIn; }
-	inline void addPoints(std::initializer_list<Point> pointsIn) { m_points = pointsIn; }
-	inline void addJoints(std::initializer_list<Joint> jointsIn) { m_joints = jointsIn; }
-	inline void addForces(std::initializer_list<ForceGenerator> forcesIn) { m_forces = forcesIn; }
+	inline void addBodies(std::vector<Body*>  bodiesIn) { m_bodies = bodiesIn; }
+	inline void addPoints(std::vector<Point*> pointsIn) { m_points = pointsIn; }
+	inline void addForces(std::vector<ForceGenerator*> forcesIn) { m_forces = forcesIn; }
+	inline void addJoints(std::vector<Joint*> jointsIn) { m_joints = jointsIn; }
 	
 	void updateBodies();
 	void updatePoints();
 	void updateJoints();
 
+	inline void applyGravity(bool ans, double val = 9.81) { m_applyGravity = ans; }
 	inline bool isRunning() const { return m_isRunning; }
 
 private:
 	void update();
 	void render();
 
-	std::vector<Body>  m_bodies;
-	std::vector<Point> m_points;
-	std::vector<Joint> m_joints;
-	std::vector<ForceGenerator> m_forces;
+	std::vector<Body*>  m_bodies;
+	std::vector<Point*> m_points;
+	std::vector<Joint*> m_joints;
+	std::vector<ForceGenerator*> m_forces;
 	SystemState m_sysState;
 
-	unsigned int m_nB;	// number of bodies
-	unsigned int m_nP;	// number of points
-	unsigned int m_nJ;	// number of joints
-	unsigned int m_nF;	// number of forces
+	int m_nB;	// number of bodies
+	int m_nP;	// number of points
+	int m_nJ;	// number of joints
+	int m_nF;	// number of forces
 
-	bool m_isRunning;
+	bool m_applyGravity;	// should gravity be applied to all bodies?
+	double m_gravAcc;		// m/s^2, acceleration due to gravity
+	bool m_isRunning;		// is application currently running?
 	const double m_rate;	// Hz, update rate system physics
 	const double m_fps;		// Hz, update rate of rendering
 	const double m_1_rate;  // sec, inverse of rate
 	const double m_1_fps;	// sec, inverse of render rate
 	const double m_timeEnd; // sec, temporary variable, time to end sim
-	double m_time;		// sec, time of the previous frame
-	double m_updateTimer;
-	double m_renderTimer;
-	Clock m_clock;
+	double m_time;			// sec, time of the previous frame
+	double m_updateTimer;	// timer for update loop
+	double m_renderTimer;	// timer for render loop
+	Clock m_clock;			// application clock
 
 	// debugging
 	DGB_APP_CALL(unsigned long m_updateCounter);

@@ -15,12 +15,12 @@ public:
 	void reset();
 
 	inline int getDof() const { return m_dof; };
-	inline double getMechEnergy() const { return m_mechEnergy; }
 
 	unsigned int nBodies;	// number of bodies in the system
 	unsigned int nConsts;	// number of constraints in the system
 	double k_c;				// coefficient of position drift correction
 	double k_c_dot;			// coefficient of velocity drift correction
+	double e_m;				// total system mechanical energy
 
 	Matrix q;		// system state vector (px, py, phi)
 	Matrix q_dot;	// 1st time derivative of system state
@@ -33,7 +33,5 @@ public:
 
 private:
 	unsigned int m_dof;		// degrees of freedom of the system
-	double m_mechEnergy;	// total system mechanical energy
 
-	void calcSystemEnergy();
 };

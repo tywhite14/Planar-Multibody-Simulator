@@ -29,7 +29,7 @@ public:
 
 	Matrix h_a;			// net applied forces/torques
 
-	std::vector<unsigned int> pointIndices;
+	std::vector<int> pointIndices;
 
 	// animation
 	anim::shape shape;

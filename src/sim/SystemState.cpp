@@ -7,7 +7,7 @@ SystemState::SystemState() :
 	m_dof(0),
 	k_c(10),
 	k_c_dot(10),
-	m_mechEnergy(0)
+	e_m(0)
 {
 	Debug("SystemState created");
 }

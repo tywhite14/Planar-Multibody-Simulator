@@ -437,6 +437,25 @@ Matrix& Matrix::operator=(const Matrix& b)
 	return *this;
 }
 
+Matrix Matrix::operator=(const Vec2d& v)
+{
+	if (m_count != 0 && m_count != 2) {
+		FATAL("Assiging Vec3d to Matrix of incompatible size", -1);
+	}
+
+	// creating new matrix
+	if (m_count == 0) {
+		deallocate();
+		m_rows  = 2;
+		m_cols  = 1;
+		m_count = 2;
+		allocate();
+	}
+
+	m_data[0] = v.x;
+	m_data[1] = v.y;
+}
+
 Matrix Matrix::operator=(const Vec3d& v)
 {
 	if (m_count != 0 && m_count != 3) {

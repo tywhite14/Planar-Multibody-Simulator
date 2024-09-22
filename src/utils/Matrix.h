@@ -19,8 +19,8 @@ public:
 	Matrix();
 	Matrix(const double s);
 	Matrix(const int rows, const int cols, double initVal = 0.0);
-	Matrix(Vec2d& v);
-	Matrix(Vec3d& v);
+	Matrix(Vec2d v);
+	Matrix(Vec3d v);
 	Matrix(const Matrix& b);
 	~Matrix();
 
@@ -50,6 +50,7 @@ public:
 	bool		operator==(const Matrix& b) const;
 	Matrix		operator=(const std::initializer_list<double>& list);
 	Matrix&		operator=(const Matrix& b);	// Copy assignment operator
+	Matrix		operator=(const Vec3d& v);
 	double		operator()(int elm) const;
 	double&		operator()(int elm);
 	double		operator()(int row, int col) const;

@@ -16,14 +16,14 @@ Matrix::Matrix(const int rows, const int cols, double initVal) :
 	allocate(initVal);
 }
 
-Matrix::Matrix(Vec2d& v) : m_rows(2), m_cols(1), m_count(2)
+Matrix::Matrix(Vec2d v) : m_rows(2), m_cols(1), m_count(2)
 {
 	allocate();
 	m_data[0] = v.x;
 	m_data[1] = v.y;
 }
 
-Matrix::Matrix(Vec3d& v) : m_rows(3), m_cols(1), m_count(3)
+Matrix::Matrix(Vec3d v) : m_rows(3), m_cols(1), m_count(3)
 {
 	allocate();
 	m_data[0] = v.x;
@@ -435,6 +435,26 @@ Matrix& Matrix::operator=(const Matrix& b)
 		m_data[i] = b.m_data[i];
 	}
 	return *this;
+}
+
+Matrix Matrix::operator=(const Vec3d& v)
+{
+	if (m_count != 0 && m_count != 3) {
+		FATAL("Assiging Vec3d to Matrix of incompatible size", -1);
+	}
+
+	// creating new matrix
+	if (m_count == 0) {
+		deallocate();
+		m_rows  = 3;
+		m_cols  = 1;
+		m_count = 3;
+		allocate();
+	}
+
+	m_data[0] = v.x;
+	m_data[1] = v.y;
+	m_data[2] = v.z;
 }
 
 double Matrix::operator()(int elm) const

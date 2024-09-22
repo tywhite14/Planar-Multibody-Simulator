@@ -2,6 +2,8 @@
 
 #include "log.h"
 #include "constants.h"
+#include "Vector.h"
+
 #include <iostream>
 #include <iomanip>
 #include <initializer_list>
@@ -17,6 +19,8 @@ public:
 	Matrix();
 	Matrix(const double s);
 	Matrix(const int rows, const int cols, double initVal = 0.0);
+	Matrix(Vec2d& v);
+	Matrix(Vec3d& v);
 	Matrix(const Matrix& b);
 	~Matrix();
 

@@ -1,7 +1,7 @@
 #include "Matrix.h"
 #include <math.h>
 
-Matrix::Matrix() : m_count(0), m_rows(0), m_cols(0), m_data(nullptr) { }
+Matrix::Matrix() : m_rows(0), m_cols(0), m_count(0), m_data(nullptr) { }
 
 Matrix::Matrix(const double s) : m_rows(1), m_cols(1), m_count(1)
 {
@@ -14,6 +14,21 @@ Matrix::Matrix(const int rows, const int cols, double initVal) :
 	m_count(rows* cols)
 {
 	allocate(initVal);
+}
+
+Matrix::Matrix(Vec2d& v) : m_rows(2), m_cols(1), m_count(2)
+{
+	allocate();
+	m_data[0] = v.x;
+	m_data[1] = v.y;
+}
+
+Matrix::Matrix(Vec3d& v) : m_rows(3), m_cols(1), m_count(3)
+{
+	allocate();
+	m_data[0] = v.x;
+	m_data[1] = v.y;
+	m_data[2] = v.z;
 }
 
 Matrix::Matrix(const Matrix& b) : m_rows(b.m_rows), m_cols(b.m_cols), m_count(b.m_count)

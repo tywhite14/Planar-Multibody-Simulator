@@ -183,6 +183,42 @@ void Application::run()
 	}
 }
 
+void Application::update()
+{
+	DGB_APP_CALL(m_updateCounter++);
+
+	// zero out each body's net force
+	for (auto& b : m_bodies) {
+		b->h_a = { 0, 0, 0 };
+	}
+
+	// sum up each body's net force
+	for (auto& f : m_forces) {
+		Body& b = *(f->B);
+		b.h_a + f->value;
+	}
+
+	// form system h_a from each body's net h_a
+
+
+	// update system matrices from joints
+
+
+	// integrate system
+
+
+	// flow down system state to vectors
+	updateBodies();
+	updatePoints();
+	updateJoints();
+}
+
+void Application::render()
+{
+	print("Application rendered");
+	DGB_APP_CALL(m_renderCounter++);
+}
+
 void Application::finalize()
 {
 	m_isRunning = false;
@@ -214,15 +250,4 @@ void Application::updatePoints()
 
 void Application::updateJoints()
 {
-}
-
-void Application::update()
-{
-	DGB_APP_CALL(m_updateCounter++);
-}
-
-void Application::render()
-{
-	print("Application rendered");
-	DGB_APP_CALL(m_renderCounter++);
 }

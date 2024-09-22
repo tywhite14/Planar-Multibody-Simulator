@@ -27,7 +27,7 @@ public:
 	double phi_dot;		// angular velocity
 	double phi_ddot;	// angular acceleration
 
-	Matrix h_a;			// net applied forces/torques
+	Vec3d h_a;			// net applied forces/torques
 
 	std::vector<int> pointIndices;
 

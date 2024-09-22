@@ -8,7 +8,7 @@
 
 #include <vector>
 
-//#define DEFINE_MODELS void Application::loadModels()
+#define DEFINE_MODELS void Application::loadModels()
 
 #define DBG_APP
 #ifdef  DBG_APP
@@ -25,17 +25,12 @@ public:
 
 	void initialize();
 	void run();
-	void finalize();
 
 	void loadModels();
 	inline void addBodies(std::vector<Body*>  bodiesIn) { m_bodies = bodiesIn; }
 	inline void addPoints(std::vector<Point*> pointsIn) { m_points = pointsIn; }
 	inline void addForces(std::vector<ForceGenerator*> forcesIn) { m_forces = forcesIn; }
 	inline void addJoints(std::vector<Joint*> jointsIn) { m_joints = jointsIn; }
-	
-	void updateBodies();
-	void updatePoints();
-	void updateJoints();
 
 	inline void applyGravity(bool ans, double val = 9.81) { m_applyGravity = ans; }
 	inline bool isRunning() const { return m_isRunning; }
@@ -43,6 +38,11 @@ public:
 private:
 	void update();
 	void render();
+	void finalize();
+	
+	void updateBodies();
+	void updatePoints();
+	void updateJoints();
 
 	std::vector<Body*>  m_bodies;
 	std::vector<Point*> m_points;

@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-void Application::loadModels()
+DEFINE_MODELS
 {
 	// BODIES ===============
 	constexpr double L1 = 0.7;

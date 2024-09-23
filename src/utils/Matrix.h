@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "Vector.h"
 
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <initializer_list>
@@ -17,10 +18,11 @@ class Matrix
 {
 public:
 	Matrix();
-	Matrix(const double s);
-	Matrix(const int rows, const int cols, double initVal = 0.0);
-	Matrix(Vec2d v);
-	Matrix(Vec3d v);
+	explicit Matrix(const double s);
+	explicit Matrix(const int rows, const int cols, double initVal = 0.0);
+	Matrix(const std::initializer_list<double>& list);
+	Matrix(const Vec2d& v);
+	Matrix(const Vec3d& v);
 	Matrix(const Matrix& b);
 	~Matrix();
 
@@ -48,10 +50,10 @@ public:
 	Matrix		operator*(const double s) const;
 	Matrix		operator/(const double s) const;
 	bool		operator==(const Matrix& b) const;
-	Matrix		operator=(const std::initializer_list<double>& list);
-	Matrix&		operator=(const Matrix& b);	// Copy assignment operator
-	Matrix		operator=(const Vec2d& v);
-	Matrix		operator=(const Vec3d& v);
+	Matrix&		operator=(const std::initializer_list<double>& list);
+	Matrix&		operator=(const Matrix& b);
+	Matrix&		operator=(const Vec2d& v);
+	Matrix&		operator=(const Vec3d& v);
 	double		operator()(int elm) const;
 	double&		operator()(int elm);
 	double		operator()(int row, int col) const;
@@ -65,6 +67,6 @@ private:
 	int m_count;
 	double* m_data;
 
-	void allocate(double initVal = 0.0);
+	void allocate(const double initVal = 0.0);
 	void deallocate();
 };

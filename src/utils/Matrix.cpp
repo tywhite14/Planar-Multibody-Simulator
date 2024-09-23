@@ -1,7 +1,11 @@
 #include "Matrix.h"
-#include <math.h>
 
-Matrix::Matrix() : m_rows(0), m_cols(0), m_count(0), m_data(nullptr) { }
+#include <algorithm>
+#include <cmath>
+
+Matrix::Matrix() : m_rows(0), m_cols(0), m_count(0), m_data(nullptr) 
+{
+}
 
 Matrix::Matrix(const double s) : m_rows(1), m_cols(1), m_count(1)
 {
@@ -16,14 +20,22 @@ Matrix::Matrix(const int rows, const int cols, double initVal) :
 	allocate(initVal);
 }
 
-Matrix::Matrix(Vec2d v) : m_rows(2), m_cols(1), m_count(2)
+Matrix::Matrix(const std::initializer_list<double>& list) :
+	m_rows(list.size()), m_cols(1), m_count(m_rows)
+{
+	allocate();
+	std::copy(list.begin(), list.end(), m_data);
+}
+
+Matrix::Matrix(const Vec2d& v) : m_rows(2), m_cols(1), m_count(2)
 {
 	allocate();
 	m_data[0] = v.x;
 	m_data[1] = v.y;
+	// TODO: maybe try *this = v; how that I've defined it?
 }
 
-Matrix::Matrix(Vec3d v) : m_rows(3), m_cols(1), m_count(3)
+Matrix::Matrix(const Vec3d& v) : m_rows(3), m_cols(1), m_count(3)
 {
 	allocate();
 	m_data[0] = v.x;
@@ -34,9 +46,7 @@ Matrix::Matrix(Vec3d v) : m_rows(3), m_cols(1), m_count(3)
 Matrix::Matrix(const Matrix& b) : m_rows(b.m_rows), m_cols(b.m_cols), m_count(b.m_count)
 {
 	allocate();
-	for (int i = 0; i < m_count; ++i) {
-		m_data[i] = b.m_data[i];
-	}
+	std::copy(b.m_data, b.m_data + m_count, m_data);
 }
 
 Matrix::~Matrix()
@@ -394,7 +404,7 @@ bool Matrix::operator==(const Matrix& b) const
 	return true;
 }
 
-Matrix Matrix::operator=(const std::initializer_list<double>& list)
+Matrix& Matrix::operator=(const std::initializer_list<double>& list)
 {
 	// probably don't bound check this one
 	if (m_count != 0 && list.size() != m_count) {
@@ -403,41 +413,37 @@ Matrix Matrix::operator=(const std::initializer_list<double>& list)
 
 	// if initializing a new, empty matrix, just make row vector
 	if (m_count == 0) {
-		m_rows = (int) list.size();
+		m_rows = list.size();
 		m_cols = 1;
+		m_count = m_rows;
+		allocate();
 	}
 
-	int i = 0;
-	for (auto& el : list) {
-		m_data[i++] = el;
-	}
-
+	std::copy(list.begin(), list.end(), m_data);
 	return *this;
 }
 
 Matrix& Matrix::operator=(const Matrix& b)
 {
+	if (this != &b) {
+		if (m_rows != b.m_rows || m_cols != b.m_cols) {
+			if (m_rows != 0 || m_cols != 0) {
+				FATAL("Assigning matrix of different size.", -1);
+			}
 
-	if (m_rows != b.m_rows || m_cols != b.m_cols) {
-		if (m_rows != 0 || m_cols != 0) {
-			FATAL("Assigning matrix of different size.", -1);
+			// let it slide of size zero, we're just initializing
+			m_rows = b.m_rows;
+			m_cols = b.m_cols;
+			m_count = b.m_count;
+			allocate();
 		}
 
-		// let it slide of size zero, we're just initializing
-		m_count = b.m_count;
-		m_rows  = b.m_rows;
-		m_cols  = b.m_cols;
-		deallocate();
-		allocate();
-	}
-
-	for (int i = 0; i < m_count; ++i) {
-		m_data[i] = b.m_data[i];
+		std::copy(b.m_data, b.m_data + b.m_count, m_data);
 	}
 	return *this;
 }
 
-Matrix Matrix::operator=(const Vec2d& v)
+Matrix& Matrix::operator=(const Vec2d& v)
 {
 	if (m_count != 0 && m_count != 2) {
 		FATAL("Assiging Vec3d to Matrix of incompatible size", -1);
@@ -445,7 +451,6 @@ Matrix Matrix::operator=(const Vec2d& v)
 
 	// creating new matrix
 	if (m_count == 0) {
-		deallocate();
 		m_rows  = 2;
 		m_cols  = 1;
 		m_count = 2;
@@ -453,10 +458,12 @@ Matrix Matrix::operator=(const Vec2d& v)
 	}
 
 	m_data[0] = v.x;
-	m_data[1] = v.y;
+	m_data[1] = v.y; 
+
+	return *this;
 }
 
-Matrix Matrix::operator=(const Vec3d& v)
+Matrix& Matrix::operator=(const Vec3d& v)
 {
 	if (m_count != 0 && m_count != 3) {
 		FATAL("Assiging Vec3d to Matrix of incompatible size", -1);
@@ -464,7 +471,6 @@ Matrix Matrix::operator=(const Vec3d& v)
 
 	// creating new matrix
 	if (m_count == 0) {
-		deallocate();
 		m_rows  = 3;
 		m_cols  = 1;
 		m_count = 3;
@@ -474,6 +480,8 @@ Matrix Matrix::operator=(const Vec3d& v)
 	m_data[0] = v.x;
 	m_data[1] = v.y;
 	m_data[2] = v.z;
+	
+	return *this;
 }
 
 double Matrix::operator()(int elm) const
@@ -549,7 +557,10 @@ std::ostream& operator<<(std::ostream& os, const Matrix& mat)
 
 void Matrix::allocate(const double initVal)
 {
-	m_data = new double[m_count] { initVal };
+	m_data = new double[m_count] { 0.0 };
+	for (int i = 0; i < m_count; i++) {
+		m_data[i] = initVal;
+	}
 }
 
 void Matrix::deallocate()

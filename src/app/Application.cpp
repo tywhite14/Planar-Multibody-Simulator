@@ -12,7 +12,7 @@ Application::Application(double rate, double fps) :
 	m_fps(fps),
 	m_1_rate(1.0/rate),
 	m_1_fps(1.0/fps),
-	m_timeEnd(1.0),
+	m_timeEnd(0.2),
 	m_time(0.0),
 	m_updateTimer(0.0),
 	m_renderTimer(0.0)
@@ -66,7 +66,6 @@ void Application::initialize()
 		b.pointIndices.push_back(i);
 	}
 
-	// TODO: try brining each of these into their classes. i.e., for (p : m_points), p.update()
 	updatePoints();
 
 	// initialize joints
@@ -283,7 +282,6 @@ void Application::update()
 		default:
 			FATAL("Undefined joint type", -1);
 		}
-
 	}
 
 	// integrate system

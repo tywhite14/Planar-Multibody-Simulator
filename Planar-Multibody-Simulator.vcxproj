@@ -85,29 +85,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\utils\Matrix.cpp" />
     <ClCompile Include="src\app\Application.cpp" />
-    <ClCompile Include="src\sim\ForceGenerator.cpp" />
-    <ClCompile Include="src\sim\Point.cpp" />
     <ClCompile Include="src\sim\Body.cpp" />
+    <ClCompile Include="src\sim\ForceGenerator.cpp" />
     <ClCompile Include="src\sim\Joint.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\sim\Point.cpp" />
     <ClCompile Include="src\sim\SystemState.cpp" />
+    <ClCompile Include="src\utils\Matrix.cpp" />
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\app\Application.h" />
     <ClInclude Include="models\demo.h" />
+    <ClInclude Include="src\app\Application.h" />
     <ClInclude Include="src\sim\Body.h" />
-    <ClInclude Include="src\sim\ForceGenerator.h" />
-    <ClInclude Include="src\utils\Clock.h" />
     <ClInclude Include="src\sim\constants.h" />
+    <ClInclude Include="src\sim\ForceGenerator.h" />
     <ClInclude Include="src\sim\Joint.h" />
+    <ClInclude Include="src\sim\Point.h" />
+    <ClInclude Include="src\sim\SystemState.h" />
+    <ClInclude Include="src\utils\Clock.h" />
     <ClInclude Include="src\utils\Matrix.h" />
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\PMS.h" />
-    <ClInclude Include="src\sim\SystemState.h" />
-    <ClInclude Include="src\sim\Point.h" />
     <ClInclude Include="src\utils\Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

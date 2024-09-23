@@ -6,7 +6,7 @@
 
 // ========================= Vect2d ========================= //
 Vec2d::Vec2d(const double s) : x(s), y(s) { }
-Vec2d::Vec2d(const double xi, const double yi) : x(xi), y(yi) {}
+Vec2d::Vec2d(const double xi, const double yi) : x(xi), y(yi) { }
 
 Vec2d Vec2d::random() const
 {
@@ -31,7 +31,7 @@ Vec2d Vec2d::randi(const int max, bool pm) const
 	return Vec2d(x, y);
 }
 
-Vec2d Vec2d::operator=(const std::initializer_list<double>& list)
+Vec2d& Vec2d::operator=(const std::initializer_list<double>& list)
 {
 	if (list.size() != 2) {
 		FATAL("Initializer list is not the same size as matrix.", 9);
@@ -39,7 +39,7 @@ Vec2d Vec2d::operator=(const std::initializer_list<double>& list)
 
 	x = *list.begin();
 	y = *list.end();
-	return Vec2d(x, y);
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vec2d& v)
@@ -79,7 +79,7 @@ Vec3d Vec3d::randi(const int max, bool pm) const
 	return Vec3d(x, y, z);
 }
 
-Vec3d Vec3d::operator=(const std::initializer_list<double>& list)
+Vec3d& Vec3d::operator=(const std::initializer_list<double>& list)
 {
 	if (list.size() != 3) {
 		FATAL("Initializer list is not the same size as matrix.", 9);
@@ -87,8 +87,8 @@ Vec3d Vec3d::operator=(const std::initializer_list<double>& list)
 
 	x = *list.begin();
 	y = *(list.begin() + 1);
-	y = *list.end();
-	return Vec3d(x, y, z);
+	z = *(list.begin() + 2);
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vec3d& v)

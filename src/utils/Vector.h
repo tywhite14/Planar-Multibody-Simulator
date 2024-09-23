@@ -26,7 +26,7 @@ public:
 	inline Vec2d operator%(const Vec2d& b) const { return Vec2d(x * b.x, y * b.y); }
 	inline Vec2d operator*(const double s) const { return Vec2d(x * s, y * s); }
 	inline bool operator==(const Vec2d& b) const { return (x == b.x && y == b.y); }
-	Vec2d operator=(const std::initializer_list<double>& list);
+	Vec2d& operator=(const std::initializer_list<double>& list);
 	friend std::ostream& operator<<(std::ostream& os, const Vec2d& v);
 
 	double x, y;
@@ -52,7 +52,7 @@ public:
 	inline Vec3d operator%(const Vec3d& b) const { return Vec3d(x * b.x, y * b.y, z * b.z); }
 	inline Vec3d operator*(const double s) const { return Vec3d(x * s, y * s, z * s); }
 	inline bool operator==(const Vec3d& b) const { return (x == b.x && y == b.y && z == b.z); }
-	Vec3d operator=(const std::initializer_list<double>& list);
+	Vec3d& operator=(const std::initializer_list<double>& list);
 	friend std::ostream& operator<<(std::ostream& os, const Vec3d& v);
 
 	double x, y, z;

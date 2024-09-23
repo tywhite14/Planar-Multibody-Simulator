@@ -70,3 +70,5 @@ private:
 	void allocate(const double initVal = 0.0);
 	void deallocate();
 };
+
+inline Matrix operator*(const double s, const Matrix& m) { return m * s; }

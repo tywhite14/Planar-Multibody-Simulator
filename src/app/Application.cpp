@@ -22,6 +22,7 @@ Application::Application(double rate, double fps) :
 	Debug("Application created");
 	
 	loadModels();
+	print("Models loaded");
 	initialize();
 }
 
@@ -54,7 +55,7 @@ void Application::initialize()
 	m_sysState.k_c		= 20;
 	m_sysState.k_c_dot	= 20;
 
-	// initialize points
+	// initialize bodies with point indices
 	for (int i = 0; i < m_nP; i++) {
 		const Point& p = *m_points.at(i);
 
@@ -65,7 +66,7 @@ void Application::initialize()
 		b.pointIndices.push_back(i);
 	}
 
-	// try brining each of these into their classes. i.e., for (p : m_points), p.update()
+	// TODO: try brining each of these into their classes. i.e., for (p : m_points), p.update()
 	updatePoints();
 
 	// initialize joints
@@ -212,7 +213,7 @@ void Application::update()
 
 		switch (j->getType())
 		{
-		case (Joint::rev):
+		case (Joint::rev): {
 			const Revolute& rev = *(Revolute*)j;
 
 			// calculate distance between points
@@ -223,19 +224,69 @@ void Application::update()
 			const Matrix f_d = m_sysState.k_c * r_ji - m_sysState.k_c_dot * v_ji;
 
 			// update system drift force
-			const int idx = 2 * i + 2;
-			for (int ii = 0; ii < idx; ii++) {
+			const int idx = 2 * i;
+			for (int ii = idx; ii < idx+2; ii++) {
 				m_sysState.f_d(ii) = f_d(ii);
 			}
 
 			// update system jacobians
+			const int ciBegin = rev.coli;
+			const int cjBegin = rev.colj;
+			const int rBegin  = rev.row;
+			const int ciEnd = ciBegin + rev.getNumConstraints();
+			const int cjEnd = cjBegin + rev.getNumConstraints();
+			const int rEnd  = rBegin  + rev.getNumConstraints(); // Will likely need to correct index
 
+			unsigned int jr = 0;
+			unsigned int jc = 0;
+
+			//TODO: These are commented out because we're accessing out of bounds.
+			// fix indexing
+
+			if (Pi.isOnGnd()) {
+				for (int r = rBegin; r < rEnd; r++) {
+					for (int c = cjBegin; c < cjEnd; c++) {
+						//m_sysState.J(r, c) = rev.Dj(jr, jc);
+						//m_sysState.J_dot(r, c) = rev.Dj_dot(jr, jc);
+						jr++;
+					}
+					jc++;
+					jr = 0;
+				}
+			}
+			else if (Pj.isOnGnd()) {
+				for (int r = rBegin; r < rEnd; r++) {
+					for (int c = ciBegin; c < ciEnd; c++) {
+						//m_sysState.J(r, c) = rev.Di(jr, jc);
+						//m_sysState.J_dot(r, c) = rev.Di_dot(jr, jc);
+						jr++;
+					}
+					jc++;
+					jr = 0;
+				}
+			}
+			else {
+				for (int r = rBegin; r < rEnd; r++) {
+					for (int c = cjBegin; c < cjEnd; c++) {
+						//m_sysState.J(r, c) = rev.Di(jr, jc);
+						//m_sysState.J(r, c) = rev.Dj(jr, jc);
+						//m_sysState.J_dot(r, c) = rev.Di_dot(jr, jc);
+						//m_sysState.J_dot(r, c) = rev.Dj_dot(jr, jc);
+						jr++;
+					}
+					jc++;
+					jr = 0;
+				}
+			}
+			break;
+		}
+		default:
+			FATAL("Undefined joint type", -1);
 		}
 
 	}
 
 	// integrate system
-
 
 	// flow down system state to vectors
 	updateBodies();

@@ -6,6 +6,8 @@
 #include "SystemState.h"
 #include "ForceGenerator.h"
 
+#include <SFML/Graphics.hpp>
+
 #include <vector>
 
 #define DEFINE_MODELS void Application::loadModels()
@@ -67,6 +69,33 @@ private:
 	double m_updateTimer;	// timer for update loop
 	double m_renderTimer;	// timer for render loop
 	Clock m_clock;			// application clock
+
+
+	void handleEvents();
+
+	struct winSettings
+	{
+		winSettings() : 
+			pos(Vec2d(50)),
+			size(Vec2d(800, 600)),
+			show(true),
+			title("Planar Multibody Dynamic Simulator"),
+			bkColor(sf::Color(12, 12, 12)),
+			fps(144)
+		{}
+
+		Vec2d pos;
+		Vec2d size;
+		bool show;
+		const char* title;
+		sf::Color bkColor;
+		double fps;
+	};
+
+	bool m_useGui;
+	sf::RenderWindow m_win;
+	winSettings m_winSettings;
+	sf::Event m_event;
 
 	// debugging
 	DGB_APP_CALL(unsigned long m_updateCounter);

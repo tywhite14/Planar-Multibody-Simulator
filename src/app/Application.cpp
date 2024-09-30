@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "log.h"
 
+// TODO: split out application and simulation to separate classes
+
 Application::Application(double rate, double fps) :
 	m_nB(0),
 	m_nP(0),
@@ -15,7 +17,8 @@ Application::Application(double rate, double fps) :
 	m_timeEnd(0.2),
 	m_time(0.0),
 	m_updateTimer(0.0),
-	m_renderTimer(0.0)
+	m_renderTimer(0.0),
+	m_useGui(true)
 {
 	DGB_APP_CALL(m_updateCounter = 0);
 	DGB_APP_CALL(m_renderCounter = 0);
@@ -38,6 +41,17 @@ Application::~Application()
 
 void Application::initialize()
 {
+	// conditionally create gui
+	if (m_useGui) {
+		m_win.create(
+			sf::VideoMode(m_winSettings.size.x, m_winSettings.size.x),
+			m_winSettings.title
+		);
+		m_win.setFramerateLimit(m_fps);
+
+		Debug("Window created");
+	}
+
 	// initialize application
 	m_nB = (int) m_bodies.size();
 	m_nP = (int) m_points.size();
@@ -152,6 +166,8 @@ void Application::initialize()
 
 void Application::run()
 {
+	handleEvents();
+
 	m_time = m_clock.getSeconds();
 
 	// exit sim
@@ -294,7 +310,9 @@ void Application::update()
 
 void Application::render()
 {
-	print("Application rendered");
+	m_win.clear(m_winSettings.bkColor);
+	m_win.display();
+
 	DGB_APP_CALL(m_renderCounter++);
 }
 
@@ -328,4 +346,14 @@ void Application::updatePoints()
 
 void Application::updateJoints()
 {
+}
+
+void Application::handleEvents()
+{
+	while (m_win.pollEvent(m_event)) {
+		if (m_event.type == sf::Event::Closed) {
+			Debug("Window closed");
+			m_win.close();
+		}
+	}
 }
